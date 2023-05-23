@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content={get_csrf_token()} />
-    <.live_title suffix=" · GHR">
+    <.live_title suffix=" *">
       <%= assigns[:page_title] || "GHR" %>
     </.live_title>
     <%= if System.get_env("PHX_SERVER", "false") == "false" do %>
