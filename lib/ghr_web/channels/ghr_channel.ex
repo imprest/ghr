@@ -1,6 +1,8 @@
 defmodule GhrWeb.GhrChannel do
   use GhrWeb, :channel
 
+  alias GhrWeb.Presence
+
   @impl true
   def join("ghr:lobby", payload, socket) do
     if authorized?(payload) do

@@ -26,6 +26,7 @@ config :ghr, GhrWeb.Endpoint,
   secret_key_base: "FSbfHlMjolKKCZAbS02PxAkRkbUBlxcF4MIi+83PY6sdI/2FzWGRoo47qA532HnE",
   watchers: [
     # esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}
+    pnpm: ["run", "dev", cd: Path.expand("../assets", __DIR__)]
   ]
 
 # ## SSL Support

@@ -16,6 +16,8 @@ defmodule Ghr.Application do
       {Phoenix.PubSub, name: Ghr.PubSub},
       # Start Finch
       {Finch, name: Ghr.Finch},
+      # Start Presence
+      GhrWeb.Presence,
       # Start the Endpoint (http/https)
       GhrWeb.Endpoint
       # Start a worker by calling: Ghr.Worker.start_link(arg)
