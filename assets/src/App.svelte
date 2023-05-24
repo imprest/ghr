@@ -10,35 +10,24 @@
   import BankView from './lib/BankView.svelte'
   import ManagementView from './lib/ManagementView.svelte'
   import GRAView from './lib/GRAView.svelte'
+  import { get_monthly_payroll, data } from './store.js'
 
   let year    = CUR_YEAR
   let month   = CUR_MONTH
   let views   = ['Default', 'Attendance', 'Advance', 'Bank', 'Loan', 'Management', 'Pvt Loan', 'SSNIT', 'PF', 'GRA', 'Overtime']
   let view    = 'Default'
-  let payroll = []
-  let management = []
-  //export let pushEvent, handleEvent
-  function handleEvent(x, y) { console.log(x, y) }
-  function pushEvent(x, y) { console.log(x, y) }
+
+  $: payroll = $data.payroll
+  $: management = $data.management
 
   onMount(() => { getMonthlyPayroll(CUR_YEAR, CUR_MONTH) })
-  handleEvent('get_monthly_payroll', (p) => { management = p.management; payroll = p.payroll })
 
-  function yearChanged() {
-    getMonthlyPayroll(year, month)
-  }
+  const yearChanged = () => getMonthlyPayroll(year, month)
+  const monthChanged = () => getMonthlyPayroll(year, month)
+  const getMonthlyPayroll = (year, month) => get_monthly_payroll(year, month)
 
-  function monthChanged() {
-    getMonthlyPayroll(year, month)
-  }
-
-  function getMonthlyPayroll(year, month) {
-    const y = year.toString().substr(2, 4)
-    const m = (month.toString().length > 1) ? month : '0'+month
-
-    pushEvent('get_monthly_payroll', { month: `${y}${m}M` })
-  }
 </script>
+
 <main class="container">
 <section class="wrapper">
   <div class="flex flex-col sm:flex-row pb-2 space-y-2 items-baseline">
@@ -97,6 +86,6 @@
 
 <style lang="postcss">
   :global(html) {
-    background-color: theme(colors.gray.50);
+    @apply bg-gray-50;
   }
 </style>

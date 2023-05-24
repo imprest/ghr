@@ -90,5 +90,5 @@ defmodule Ghr.Data.Utils do
     :io_lib.format("~2..0B-~2..0B-~4..0B", [d.day, d.month, d.year])
   end
 
-  def format_currency(n), do: Number.Delimit.number_to_delimited(n)
+  # def format_currency(n), do: Number.Delimit.number_to_delimited(n)
 end

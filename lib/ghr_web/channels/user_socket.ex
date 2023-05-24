@@ -35,7 +35,7 @@ defmodule GhrWeb.UserSocket do
           |> hd
 
         socket = assign(socket, :name, name)
-        {:ok, assign(socket, :current_id, user_id)}
+        {:ok, assign(socket, :user_id, user_id)}
 
       {:error, _reason} ->
         :error

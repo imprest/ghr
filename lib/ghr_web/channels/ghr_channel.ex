@@ -2,10 +2,12 @@ defmodule GhrWeb.GhrChannel do
   use GhrWeb, :channel
 
   alias GhrWeb.Presence
+  alias Ghr.Data.ImportPayroll, as: Payroll
 
   @impl true
   def join("ghr:lobby", payload, socket) do
     if authorized?(payload) do
+      send(self(), :after_join)
       {:ok, socket}
     else
       {:error, %{reason: "unauthorized"}}
@@ -24,6 +26,31 @@ defmodule GhrWeb.GhrChannel do
   @impl true
   def handle_in("shout", payload, socket) do
     broadcast(socket, "shout", payload)
+    {:noreply, socket}
+  end
+
+  @impl true
+  def handle_in("get_monthly_payroll", %{"month"=> month}, socket) do
+    {:reply,
+      {:ok,
+        %{payroll: Payroll.import_month(month),
+          management: Payroll.get_management_payroll(month) }
+      },
+     socket
+    }
+  end
+
+  @impl true
+  def handle_info(:after_join, socket) do
+    presence = Presence.get_by_key(socket, socket.assigns.name)
+    IO.inspect presence, label: "Presence Data:"
+
+    {:ok, _} =
+      Presence.track(socket, socket.assigns.name, %{
+        online_at: inspect(System.system_time(:second))
+      })
+
+    push(socket, "presence_state", Presence.list(socket))
     {:noreply, socket}
   end
 

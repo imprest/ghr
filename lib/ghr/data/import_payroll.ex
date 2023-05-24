@@ -114,7 +114,7 @@ defmodule Ghr.Data.ImportPayroll do
   end
 
   def parse_employee_master(dbf_file) do
-    DbaseParser.parse(
+    Dbase.parse(
       dbf_file,
       [
         "EMP_NO",
@@ -161,7 +161,7 @@ defmodule Ghr.Data.ImportPayroll do
   defp parse_and_calculate_monthly_payroll(dbf_file, month, employees) do
     tax_year = determine_tax_year(month)
 
-    DbaseParser.parse(
+    Dbase.parse(
       dbf_file,
       [
         "PD_MTH",
