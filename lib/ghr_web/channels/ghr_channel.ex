@@ -1,8 +1,13 @@
 defmodule GhrWeb.GhrChannel do
   use GhrWeb, :channel
+  use ChannelHandler.Router
 
   alias GhrWeb.Presence
   alias Ghr.Data.ImportPayroll, as: Payroll
+
+  # plug GhrWeb.ChannelPlugs.EnsureAuthenticated
+
+  event "payroll:get_month", GhrWeb.PayrollHandler, :get_month
 
   @impl true
   def join("ghr:lobby", payload, socket) do
@@ -27,17 +32,6 @@ defmodule GhrWeb.GhrChannel do
   def handle_in("shout", payload, socket) do
     broadcast(socket, "shout", payload)
     {:noreply, socket}
-  end
-
-  @impl true
-  def handle_in("get_monthly_payroll", %{"month"=> month}, socket) do
-    {:reply,
-      {:ok,
-        %{payroll: Payroll.import_month(month),
-          management: Payroll.get_management_payroll(month) }
-      },
-     socket
-    }
   end
 
   @impl true

@@ -60,7 +60,7 @@ progress,
 
 /* content */
 main {
-  @apply h-full mt-10 pt-4 absolute;
+  /* @apply h-full mt-10 pt-4 absolute; */
 }
 
 .content {

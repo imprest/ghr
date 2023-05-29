@@ -14,13 +14,13 @@ channel.join()
 export const presence = new Presence(channel);
 
 // PAYROLL DATA
-export const data = writable({payroll: [], management: []})
+export const data = writable({ payroll: [], management: [] })
 
-export function get_monthly_payroll(year: number, month: number) {
-  const y = year.toString().substring(2,4)
-  const m = (month.toString().length > 1) ? month : '0'+month
+export function getPayroll(year: number, month: number) {
+  const y = year.toString().substring(2, 4)
+  const m = (month.toString().length > 1) ? month : '0' + month
   channel
-    .push('get_monthly_payroll', {month: `${y}${m}M`})
+    .push('payroll:get_month', { month: `${y}${m}M` })
     .receive('ok', (msg) => data.set(msg))
     .receive('error', (msg) => console.log(msg))
     .receive('timeout', () => console.log("timeout"))
