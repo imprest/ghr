@@ -41,7 +41,8 @@
   const getMonthlyPayroll = (year, month) => getPayroll(year, month);
 </script>
 
-<header class="border-gray-300 border-b h-10">
+<!-- <header class="border-gray-300 border-b h-10"> -->
+<header class="header">
   <nav class="nav">
     <ul>
       <li><strong>GHR</strong></li>
@@ -49,23 +50,22 @@
     <ul><li><a href="/">Logout</a></li></ul>
   </nav>
 </header>
-<main class="container-full sm:px-2 mt-4">
+<main class="container-full pt-4">
   <section class="section">
     <div class="flex flex-col sm:flex-row pb-2 space-y-2 items-baseline">
-      <div class="flex-grow">
-        <label
-          for="view"
-          class="border-2 border-gray-500 py-1 rounded-l-lg px-2">View</label
-        >
+      <div class="select-combo flex-grow">
+        <label for="view">
+          View
+        </label>
         <select id="view" bind:value={view}>
           {#each views as v}
             <option>{v}</option>
           {/each}
         </select>
       </div>
-      <div>
+      <div class="select-combo">
         <label for="month">Month</label>
-        <select id="month" bind:value={month} on:blur={monthChanged}>
+        <select id="month" bind:value={month} on:blur={monthChanged} class="mr-2">
           {#each MONTHS as m}
             <option>{m}</option>
           {/each}
@@ -109,6 +109,6 @@
 
 <style lang="postcss">
   :global(html) {
-    @apply bg-gray-50;
+    @apply bg-white;
   }
 </style>

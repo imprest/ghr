@@ -1,15 +1,14 @@
 :root {
+  --header-height: 3rem;
 }
 
 html {
   box-sizing: border-box;
-  height: 100%;
   width: 100%;
   text-rendering: optimizeLegibility;
 }
 
 body {
-  @apply text-gray-800;
   box-sizing: border-box;
   height: 100%;
   width: 100%;
@@ -37,8 +36,6 @@ hgroup {
   > *:last-child { @apply text-gray-500 text-base pl-0.5 }
 }
 
-::selection { @apply  bg-primary-focus }
-
 [type="checkbox"],[type="radio"] { @apply border-2 }
 [type="checkbox"][type="switch"] { @apply border-[3px] }
 
@@ -58,19 +55,27 @@ progress,
   translate: 0 0;
 }
 
-/* content */
-main {
-  /* @apply h-full mt-10 pt-4 absolute; */
+.header {
+  @apply fixed top-0 left-0 z-10 bg-white border-b border-gray-300 w-full flex;
+  height: var(--header-height);
 }
 
-.content {
-  @apply overflow-auto;
+/* content */
+main {
+  @apply: h-full;
+  margin-top: var(--header-height);
 }
 
 .section {
-  @apply px-2 lg:px-4 max-w-7xl mx-auto;
+  @apply px-2 max-w-7xl mx-auto;
+}
+.section-full {
+  @apply px-2 max-w-none;
 }
 .section:not(:last-child) {
+  @apply mb-4;
+}
+.section-full:not(:last-child) {
   @apply mb-4;
 }
 

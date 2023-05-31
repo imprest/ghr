@@ -29,7 +29,7 @@
   }
 </script>
 
-<section class="wrapper">
+<section class="section">
   <div class="flex flex-col gap-8 lg:flex-row">
   <div>
   <table class="table mx-auto">

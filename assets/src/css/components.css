@@ -19,15 +19,8 @@ button {
 
   &:is(:active) { @apply bg-primary-active }
 }
-
-button.secondary {
-  @apply bg-secondary text-white;
-}
-
-button.error {
-  @apply bg-red-500 text-white;
-}
-
+button.secondary { @apply bg-secondary text-white; }
+button.error { @apply bg-red-500 text-white; }
 button.warning { @apply bg-yellow-400 text-black; }
 
 .tags {
@@ -58,13 +51,7 @@ button.warning { @apply bg-yellow-400 text-black; }
   }
 }
 
-.is-striped {
-  tbody {
-    tr:nth-child(even) {
-      background-color: lightgoldenrodyellow;
-    }
-  }
-}
+/* TABLE */
 
 .table {
   @apply divide-y divide-solid divide-gray-300;
@@ -89,13 +76,33 @@ button.warning { @apply bg-yellow-400 text-black; }
   }
   tbody {
     tr {
-      @apply align-top hover:bg-blue-100 print:border-b print:border-gray-600;
+      @apply align-top hover:bg-yellow-100 print:border-b print:border-gray-600;
       td:first-child {
         @apply pl-2;
       }
       td:last-child {
         @apply pr-2;
       }
+    }
+  }
+
+  &.is-bordered td { border-width: 1px;}
+  &.is-bordered th { border-width: 1px; }
+  &.is-bordered tr {
+    &:last-child td, th { border-bottom-width: 1px; }
+  }
+
+  &.is-striped {
+    tbody {
+      tr:nth-child(even) {
+        background-color: lightgoldenrodyellow;
+      }
+    }
+  }
+
+  &.is-hoverable {
+    tbody {
+      tr:hover { @apply bg-yellow-200 }
     }
   }
 }
@@ -125,17 +132,29 @@ progress {
 .nav, .nav ul { display: flex; }
 
 .nav {
-  @apply justify-between max-w-7xl mx-auto;
+  @apply justify-between max-w-7xl mx-auto flex-grow;
 
   ol, ul {
     @apply items-center mb-0 p-0 list-none;
 
     &:first-of-type { @apply ml-1; }
+
     &:last-of-type { @apply mr-1; }
   }
 
-  li { 
+  li {
     @apply inline m-0 p-2;
     > * { @apply space-x-0 }
+  }
+}
+
+/* Select Combo */
+.select-combo {
+  @apply flex;
+  > label {
+    @apply border border-gray-300 rounded-s-sm border-r-0 py-1 px-2 bg-gray-200;
+  }
+  > select {
+    @apply ml-0 bg-white border rounded-e-sm border-gray-300;
   }
 }

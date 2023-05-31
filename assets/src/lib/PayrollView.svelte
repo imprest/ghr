@@ -1,95 +1,74 @@
 <script>
   import { moneyFmt } from "../utils.js";
   let summary = {};
+  let h = 0;
+  let headerHeight = document.getElementsByClassName('header')[0].clientHeight;
+  let sectionHeight = document.getElementsByClassName('section')[0].clientHeight;
+  const keys = [
+    "days_worked", "base_salary", "earned_salary", "ssnit_amount", "pf_amount", "cash_allowance",
+    "total_cash", "total_relief", "taxable_income", "tax_ded", "overtime_earned", "overtime_tax",
+    "total_tax", "tuc_amount", "advance", "loan", "staff_welfare_ded", "pvt_loan",
+    "total_ded", "total_pay"
+  ]
+
   export let payroll = [];
   $: if (payroll) {
-    summary = {
-      days_worked: 0,
-      base_salary: 0,
-      earned_salary: 0,
-      ssnit_amount: 0,
-      pf_amount: 0,
-      cash_allowance: 0,
-      total_cash: 0,
-      total_relief: 0,
-      taxable_income: 0,
-      tax_ded: 0,
-      overtime_earned: 0,
-      overtime_tax: 0,
-      total_tax: 0,
-      tuc_amount: 0,
-      advance: 0,
-      loan: 0,
-      staff_welfare_ded: 0,
-      pvt_loan: 0,
-      total_ded: 0,
-      total_pay: 0,
-    };
+    // New payroll data do initialise summary object to zeros
+    keys.forEach((k) => summary[k] = 0)
+    // For each payroll item, aggregate the data into summary object
     payroll.forEach((x) => {
-      summary.days_worked += Number.parseFloat(x.days_worked);
-      summary.base_salary += Number.parseFloat(x.base_salary);
-      summary.earned_salary += Number.parseFloat(x.earned_salary);
-      summary.ssnit_amount += Number.parseFloat(x.ssnit_amount);
-      summary.pf_amount += Number.parseFloat(x.pf_amount);
-      summary.cash_allowance += Number.parseFloat(x.cash_allowance);
-      summary.total_cash += Number.parseFloat(x.total_cash);
-      summary.total_relief += Number.parseFloat(x.total_relief);
-      summary.taxable_income += Number.parseFloat(x.taxable_income);
-      summary.tax_ded += Number.parseFloat(x.tax_ded);
-      summary.overtime_earned += Number.parseFloat(x.overtime_earned);
-      summary.overtime_tax += Number.parseFloat(x.overtime_tax);
-      summary.total_tax += Number.parseFloat(x.total_tax);
-      summary.tuc_amount += Number.parseFloat(x.tuc_amount);
-      summary.advance += Number.parseFloat(x.advance);
-      summary.loan += Number.parseFloat(x.loan);
-      summary.staff_welfare_ded += Number.parseFloat(x.staff_welfare_ded);
-      summary.pvt_loan += Number.parseFloat(x.pvt_loan);
-      summary.total_ded += Number.parseFloat(x.total_ded);
-      summary.total_pay += Number.parseFloat(x.total_pay);
+      keys.forEach((k) => {
+        summary[k] += Number.parseFloat(x[k])
+      })
     });
   }
 </script>
 
-<section class="section max-w-full">
-  <div class="max-w-98vw max-h-resp overflow-x-auto">
-    <table class="table">
+<svelte:window bind:innerHeight={h}/>
+
+<section class="section-full">
+  <div class="overflow-x-auto" style:height="{h-headerHeight-sectionHeight-40}px">
+    <table class="table is-striped is-bordered is-hoverable">
       <thead>
         <tr>
-          <th class="text-center"><span class="cell">ID</span></th>
-          <th><span class="cell">Name</span></th>
-          <th class="text-center"><span class="cell">Days</span></th>
-          <th class="text-center"><span class="cell">Basic Salary</span></th>
-          <th class="text-center"><span class="cell">Earned Salary</span></th>
-          <th class="text-center"><span class="cell">SSNIT</span></th>
-          <th class="text-center"><span class="cell">PF</span></th>
-          <th class="text-center"><span class="cell">Cash Allow.</span></th>
-          <th class="text-center"><span class="cell">Total Income</span></th>
-          <th class="text-center"><span class="cell">Total Relief</span></th>
-          <th class="text-center"><span class="cell">Taxable Income</span></th>
-          <th class="text-center"><span class="cell">Tax Ded.</span></th>
-          <th class="text-center"><span class="cell">Overtime</span></th>
-          <th class="text-center"><span class="cell">Overtime Tax</span></th>
-          <th class="text-center"><span class="cell">Total Tax</span></th>
-          <th class="text-center"><span class="cell">TUC Ded.</span></th>
-          <th class="text-center"><span class="cell">Advance</span></th>
-          <th class="text-center"><span class="cell">Loan</span></th>
-          <th class="text-center"><span class="cell">Welfare Ded.</span></th>
-          <th class="text-center"><span class="cell">Pvt Loan</span></th>
-          <th class="text-center"><span class="cell">Total Ded.</span></th>
-          <th class="text-center"><span class="cell">Total Pay</span></th>
-          <th class="text-center"><span class="cell">Net Pay</span></th>
+          <th class="text-center">ID</th>
+          <th>Name</th>
+          <th class="text-center">Days</th>
+          <th class="text-center">Basic Salary</th>
+          <th class="text-center">Earned Salary</th>
+          <th class="text-center">SSNIT</th>
+          <th class="text-center">PF</th>
+          <th class="text-center">Cash Allow.</th>
+          <th class="text-center">Total Income</th>
+          <th class="text-center">Total Relief</th>
+          <th class="text-center">Taxable Income</th>
+          <th class="text-center">Tax Ded.</th>
+          <th class="text-center">Overtime</th>
+          <th class="text-center">Overtime Tax</th>
+          <th class="text-center">Total Tax</th>
+          <th class="text-center">TUC Ded.</th>
+          <th class="text-center">Advance</th>
+          <th class="text-center">Loan</th>
+          <th class="text-center">Welfare Ded.</th>
+          <th class="text-center">Pvt Loan</th>
+          <th class="text-center">Total Ded.</th>
+          <th class="text-center">Total Pay</th>
+          <th class="text-center">Net Pay</th>
         </tr>
       </thead>
       <tbody>
         {#each payroll as p, i}
-          <tr class={p.net_pay != p.total_pay ? "has-background-warning" : ""}>
-            <td class="text-center"
-              ><span class={i % 2 == 0 ? "cell" : "cell-odd"}>{p.id}</span></td
-            >
-            <td
-              ><span class={i % 2 == 0 ? "cell" : "cell-odd"}>{p.name}</span
-              ></td
-            >
+          <tr class={p.net_pay != p.total_pay ? "red" : ""}>
+            <td class="text-center">
+              <span class={i%2===0 ? "bg-white" : "yellow"}>
+                {p.id}
+              </span>
+            </td>
+            <td>
+              <span class={i%2===0 ? "bg-white" : "yellow"}>
+                {p.name}
+              </span>
+            </td>
             <td class="text-center">{moneyFmt(p.days_worked)}</td>
             <td class="text-right"> {moneyFmt(p.base_salary)}</td>
             <td class="text-right"> {moneyFmt(p.earned_salary)}</td>
@@ -145,55 +124,39 @@
   </div>
 </section>
 
-<style>
-  .has-background-warning {
-    background-color: red;
+<style lang="postcss">
+  thead tr th,
+  tfoot tr th {
+    @apply sticky z-30 bg-white;
   }
 
   thead tr th {
-    position: sticky;
-    top: 0;
-    padding: 0;
-    z-index: 1;
-  }
-  thead th:first-child {
-    position: sticky;
-    left: 0;
-    z-index: 3;
-  }
-  thead th:nth-child(2) {
-    position: sticky;
-    left: 8px;
-    z-index: 2;
+    @apply top-0;
   }
 
   tfoot tr th {
-    position: sticky;
-    bottom: 0;
-    background-color: white;
-    z-index: 1;
+    @apply bottom-0;
   }
-  tbody tr td:first-child {
-    position: sticky;
-    left: 0;
-  }
-  tbody tr td:nth-child(2) {
-    position: sticky;
-    left: 60px;
-    padding: 0;
-  }
-  .cell {
-    display: block;
-    background-color: white;
-    padding: 0.25em 0.5em;
-  }
-  th span.cell {
-    height: 56px;
-  }
-  .cell-odd {
-    display: block;
-    background-color: lightgoldenrodyellow;
-    padding: 0.25em 0.5em;
-  }
-</style>
 
+  tbody tr:hover{
+    @apply bg-yellow-300;
+      span {
+        @apply bg-yellow-300;
+      }
+  }
+
+  tbody tr td:first-child {
+    @apply p-0 sticky left-0 z-10 h-full;
+  }
+
+  tbody tr td:nth-child(2) {
+    @apply p-0 sticky left-[60px] z-10 h-full;
+  }
+
+  tbody tr td > span {
+    @apply px-2 py-1 block h-full z-40;
+  }
+
+  .red { @apply bg-red-500; }
+  .yellow { background-color: lightgoldenrodyellow; }
+</style>
