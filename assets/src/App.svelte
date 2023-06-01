@@ -38,7 +38,8 @@
 
   const yearChanged = () => getMonthlyPayroll(year, month);
   const monthChanged = () => getMonthlyPayroll(year, month);
-  const getMonthlyPayroll = (year, month) => getPayroll(year, month);
+  const getMonthlyPayroll = (year: number, month: number) =>
+    getPayroll(year, month);
 </script>
 
 <!-- <header class="border-gray-300 border-b h-10"> -->
@@ -54,9 +55,7 @@
   <section class="section">
     <div class="flex flex-col sm:flex-row pb-2 space-y-2 items-baseline">
       <div class="select-combo flex-grow">
-        <label for="view">
-          View
-        </label>
+        <label for="view"> View </label>
         <select id="view" bind:value={view}>
           {#each views as v}
             <option>{v}</option>
@@ -65,13 +64,18 @@
       </div>
       <div class="select-combo">
         <label for="month">Month</label>
-        <select id="month" bind:value={month} on:blur={monthChanged} class="mr-2">
+        <select
+          id="month"
+          bind:value={month}
+          on:change={monthChanged}
+          class="mr-2"
+        >
           {#each MONTHS as m}
             <option>{m}</option>
           {/each}
         </select>
         <label class="pl-2" for="year">Year</label>
-        <select id="year" bind:value={year} on:blur={yearChanged}>
+        <select id="year" bind:value={year} on:change={yearChanged}>
           {#each CUR_YEARS as y}
             <option>{y}</option>
           {/each}
