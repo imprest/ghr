@@ -38,8 +38,7 @@
 
   const yearChanged = () => getMonthlyPayroll(year, month);
   const monthChanged = () => getMonthlyPayroll(year, month);
-  const getMonthlyPayroll = (year: number, month: number) =>
-    getPayroll(year, month);
+  const getMonthlyPayroll = (year: number, month: number) => getPayroll(year, month);
 </script>
 
 <!-- <header class="border-gray-300 border-b h-10"> -->
@@ -53,7 +52,7 @@
 </header>
 <main class="container-full pt-4">
   <section class="section">
-    <div class="flex flex-col sm:flex-row pb-2 space-y-2 items-baseline">
+    <div class="flex flex-col sm:flex-row gap-2 items-baseline">
       <div class="select-combo flex-grow">
         <label for="view"> View </label>
         <select id="view" bind:value={view}>

@@ -140,7 +140,7 @@
 
   tbody tr:hover{
     @apply bg-yellow-300;
-      span {
+    & span {
         @apply bg-yellow-300;
       }
   }
