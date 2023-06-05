@@ -1,6 +1,6 @@
 
 <script>
-  import { moneyFmt } from '../utils.js'
+  import { moneyFmt } from '../../utils'
 
   export let management = []
 

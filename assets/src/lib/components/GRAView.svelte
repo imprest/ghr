@@ -1,4 +1,89 @@
-<section class="wrapper max-w-full">
+<script>
+  import { moneyFmt } from '../../utils'
+  let summary = {}
+  let msummary = {}
+  export let payroll = []
+  export let management = []
+
+  $: if (payroll) {
+    summary = {
+      days_worked: 0,
+      base_salary: 0,
+      earned_salary: 0,
+      ssnit_amount: 0,
+      pf_amount: 0,
+      cash_allowance: 0,
+      total_cash: 0,
+      total_relief: 0,
+      taxable_income: 0,
+      tax_ded: 0,
+      overtime_earned: 0,
+      overtime_tax: 0,
+      total_tax: 0,
+      tuc_amount: 0,
+      advance: 0,
+      loan: 0,
+      staff_welfare_ded: 0,
+      pvt_loan: 0,
+      total_ded: 0,
+      total_pay: 0
+    };
+    payroll.forEach(x => {
+      summary.days_worked += Number.parseFloat(x.days_worked);
+      summary.base_salary += Number.parseFloat(x.base_salary);
+      summary.earned_salary += Number.parseFloat(x.earned_salary);
+      summary.ssnit_amount += Number.parseFloat(x.ssnit_amount);
+      summary.pf_amount += Number.parseFloat(x.pf_amount);
+      summary.cash_allowance += Number.parseFloat(x.cash_allowance);
+      summary.total_cash += Number.parseFloat(x.total_cash);
+      summary.total_relief += Number.parseFloat(x.total_relief);
+      summary.taxable_income += Number.parseFloat(x.taxable_income);
+      summary.tax_ded += Number.parseFloat(x.tax_ded);
+      summary.overtime_earned += Number.parseFloat(x.overtime_earned);
+      summary.overtime_tax += Number.parseFloat(x.overtime_tax);
+      summary.total_tax += Number.parseFloat(x.total_tax);
+    })
+  }
+
+  $: if (management) {
+    msummary = {
+      earned_salary: 0,
+      ssnit_amount: 0,
+      pf_amount: 0,
+      cash_allowance: 0,
+      total_cash: 0,
+      total_gra_income: 0,
+      total_relief: 0,
+      taxable_income: 0,
+      tax_ded: 0,
+      overtime_earned: 0,
+      overtime_tax: 0,
+      total_tax: 0,
+      tuc_amount: 0,
+      advance: 0,
+      loan: 0,
+      staff_welfare_ded: 0,
+      pvt_loan: 0,
+      total_ded: 0,
+      total_pay: 0
+    };
+    management.forEach(x => {
+      msummary.earned_salary += Number.parseFloat(x.earned_salary);
+      msummary.ssnit_amount += Number.parseFloat(x.ssnit_amount);
+      msummary.cash_allowance += Number.parseFloat(x.cash_allowance);
+      msummary.total_cash += Number.parseFloat(x.total_cash);
+      msummary.total_gra_income += Number.parseFloat(x.total_gra_income);
+      msummary.total_relief += Number.parseFloat(x.total_relief);
+      msummary.taxable_income += Number.parseFloat(x.taxable_income);
+      msummary.tax_ded += Number.parseFloat(x.tax_ded);
+      msummary.overtime_earned += Number.parseFloat(x.overtime_earned);
+      msummary.overtime_tax += Number.parseFloat(x.overtime_tax);
+      msummary.total_tax += Number.parseFloat(x.total_tax);
+    })
+  }
+</script>
+
+<section class="section max-w-full">
   <div class="max-w-98vw max-h-resp overflow-x-auto">
     <table class="table">
       <thead class="h-20">
@@ -127,90 +212,6 @@
   </div>
 </section>
 
-<script>
-  import { moneyFmt } from '../utils.js'
-  let summary = {}
-  let msummary = {}
-  export let payroll = []
-  export let management = []
-
-  $: if (payroll) {
-    summary = {
-      days_worked: 0,
-      base_salary: 0,
-      earned_salary: 0,
-      ssnit_amount: 0,
-      pf_amount: 0,
-      cash_allowance: 0,
-      total_cash: 0,
-      total_relief: 0,
-      taxable_income: 0,
-      tax_ded: 0,
-      overtime_earned: 0,
-      overtime_tax: 0,
-      total_tax: 0,
-      tuc_amount: 0,
-      advance: 0,
-      loan: 0,
-      staff_welfare_ded: 0,
-      pvt_loan: 0,
-      total_ded: 0,
-      total_pay: 0
-    };
-    payroll.forEach(x => {
-      summary.days_worked += Number.parseFloat(x.days_worked);
-      summary.base_salary += Number.parseFloat(x.base_salary);
-      summary.earned_salary += Number.parseFloat(x.earned_salary);
-      summary.ssnit_amount += Number.parseFloat(x.ssnit_amount);
-      summary.pf_amount += Number.parseFloat(x.pf_amount);
-      summary.cash_allowance += Number.parseFloat(x.cash_allowance);
-      summary.total_cash += Number.parseFloat(x.total_cash);
-      summary.total_relief += Number.parseFloat(x.total_relief);
-      summary.taxable_income += Number.parseFloat(x.taxable_income);
-      summary.tax_ded += Number.parseFloat(x.tax_ded);
-      summary.overtime_earned += Number.parseFloat(x.overtime_earned);
-      summary.overtime_tax += Number.parseFloat(x.overtime_tax);
-      summary.total_tax += Number.parseFloat(x.total_tax);
-    })
-  }
-
-  $: if (management) {
-    msummary = {
-      earned_salary: 0,
-      ssnit_amount: 0,
-      pf_amount: 0,
-      cash_allowance: 0,
-      total_cash: 0,
-      total_gra_income: 0,
-      total_relief: 0,
-      taxable_income: 0,
-      tax_ded: 0,
-      overtime_earned: 0,
-      overtime_tax: 0,
-      total_tax: 0,
-      tuc_amount: 0,
-      advance: 0,
-      loan: 0,
-      staff_welfare_ded: 0,
-      pvt_loan: 0,
-      total_ded: 0,
-      total_pay: 0
-    };
-    management.forEach(x => {
-      msummary.earned_salary += Number.parseFloat(x.earned_salary);
-      msummary.ssnit_amount += Number.parseFloat(x.ssnit_amount);
-      msummary.cash_allowance += Number.parseFloat(x.cash_allowance);
-      msummary.total_cash += Number.parseFloat(x.total_cash);
-      msummary.total_gra_income += Number.parseFloat(x.total_gra_income);
-      msummary.total_relief += Number.parseFloat(x.total_relief);
-      msummary.taxable_income += Number.parseFloat(x.taxable_income);
-      msummary.tax_ded += Number.parseFloat(x.tax_ded);
-      msummary.overtime_earned += Number.parseFloat(x.overtime_earned);
-      msummary.overtime_tax += Number.parseFloat(x.overtime_tax);
-      msummary.total_tax += Number.parseFloat(x.total_tax);
-    })
-  }
-</script>
 
 <style>
 thead tr th {

@@ -1,15 +1,15 @@
 <script lang="ts">
   import { MONTHS, CUR_YEARS, CUR_YEAR, CUR_MONTH } from "./utils.js";
   import { onMount } from "svelte";
-  import PayrollView from "./lib/PayrollView.svelte";
-  import PayrollFilterView from "./lib/PayrollFilterView.svelte";
-  import AttendanceView from "./lib/AttendanceView.svelte";
-  import SSNITView from "./lib/SSNITView.svelte";
-  import PFView from "./lib/PFView.svelte";
-  import OvertimeView from "./lib/OvertimeView.svelte";
-  import BankView from "./lib/BankView.svelte";
-  import ManagementView from "./lib/ManagementView.svelte";
-  import GRAView from "./lib/GRAView.svelte";
+  import PayrollView from "./lib/components/PayrollView.svelte";
+  import PayrollFilterView from "./lib/components/PayrollFilterView.svelte";
+  import AttendanceView from "./lib/components/AttendanceView.svelte";
+  import SSNITView from "./lib/components/SSNITView.svelte";
+  import PFView from "./lib/components/PFView.svelte";
+  import OvertimeView from "./lib/components/OvertimeView.svelte";
+  import BankView from "./lib/components/BankView.svelte";
+  import ManagementView from "./lib/components/ManagementView.svelte";
+  import GRAView from "./lib/components/GRAView.svelte";
   import { getPayroll, data } from "./store.js";
 
   let year = CUR_YEAR;
@@ -53,6 +53,7 @@
 <main class="container-full pt-4">
   <section class="section">
     <div class="flex flex-col sm:flex-row gap-2 items-baseline">
+      <button class="secondary">Test</button>
       <div class="select-combo flex-grow">
         <label for="view"> View </label>
         <select id="view" bind:value={view}>

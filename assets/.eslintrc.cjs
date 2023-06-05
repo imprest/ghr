@@ -7,6 +7,7 @@ module.exports = {
   parser: "@typescript-eslint/parser",
   parserOptions: {
     project: "./tsconfig.json",
+    tsconfigRootDir: __dirname,
     extraFileExtensions: [".svelte"]
   },
   overrides: [
@@ -21,5 +22,8 @@ module.exports = {
   rules: {
     // override/add rules settings here, such as:
     // 'svelte/rule-name': 'error'
-  }
+  },
+  "ignorePatterns": [
+    "postcss.config.js", "svelte.config.js", "tailwind.config.cjs", ".eslintrc.cjs"
+  ]
 }

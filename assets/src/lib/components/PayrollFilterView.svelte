@@ -1,5 +1,5 @@
 <script>
-  import { moneyFmt } from '../utils.js'
+  import { moneyFmt } from '../../utils'
 
   export let payroll = []
   export let header = ""

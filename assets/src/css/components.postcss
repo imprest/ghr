@@ -19,7 +19,16 @@ button {
 
   &:is(:active) { @apply bg-primary-active }
 }
-button.secondary { @apply bg-secondary text-white; }
+button.secondary {
+  @apply bg-secondary text-white;
+
+  &:is([aria-current], :hover, :focus-visible) {
+    @apply bg-secondary-hover ring-secondary-focus
+  }
+
+  &:is(:active) { @apply bg-secondary-active }
+}
+
 button.error { @apply bg-red-500 text-white; }
 button.warning { @apply bg-yellow-400 text-black; }
 
