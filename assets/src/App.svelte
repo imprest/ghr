@@ -1,16 +1,17 @@
 <script lang="ts">
-  import { MONTHS, CUR_YEARS, CUR_YEAR, CUR_MONTH } from "./utils.js";
+  import { MONTHS, CUR_YEARS, CUR_YEAR, CUR_MONTH } from "$lib/utils";
   import { onMount } from "svelte";
-  import PayrollView from "./lib/components/PayrollView.svelte";
-  import PayrollFilterView from "./lib/components/PayrollFilterView.svelte";
-  import AttendanceView from "./lib/components/AttendanceView.svelte";
-  import SSNITView from "./lib/components/SSNITView.svelte";
-  import PFView from "./lib/components/PFView.svelte";
-  import OvertimeView from "./lib/components/OvertimeView.svelte";
-  import BankView from "./lib/components/BankView.svelte";
-  import ManagementView from "./lib/components/ManagementView.svelte";
-  import GRAView from "./lib/components/GRAView.svelte";
+  import PayrollView from "$components/PayrollView.svelte";
+  import PayrollFilterView from "$components/PayrollFilterView.svelte";
+  import AttendanceView from "$components/AttendanceView.svelte";
+  import SSNITView from "$components/SSNITView.svelte";
+  import PFView from "$components/PFView.svelte";
+  import OvertimeView from "$components/OvertimeView.svelte";
+  import BankView from "$components/BankView.svelte";
+  import ManagementView from "$components/ManagementView.svelte";
+  import GRAView from "$components/GRAView.svelte";
   import { getPayroll, data } from "./store.js";
+  import {Button} from "$ui/button";
 
   let year = CUR_YEAR;
   let month = CUR_MONTH;
@@ -53,7 +54,9 @@
 <main class="container-full pt-4">
   <section class="section">
     <div class="flex flex-col sm:flex-row gap-2 items-baseline">
-      <button class="secondary">Test</button>
+      <button class="button">Test</button>
+      <button class="button secondary">Test</button>
+      <Button>Test</Button>
       <div class="select-combo flex-grow">
         <label for="view"> View </label>
         <select id="view" bind:value={view}>

@@ -1,6 +1,14 @@
 {
   "extends": "@tsconfig/svelte/tsconfig.json",
   "compilerOptions": {
+    "paths": {
+      "$lib": ["./src/lib"],
+      "$lib/*": ["./src/lib/*"],
+      "$components": ["./src/lib/components"],
+      "$components/*": ["./src/lib/components/*"],
+      "$ui": ["./src/lib/components/ui"],
+      "$ui/*": ["./src/lib/components/ui/*"],
+    },
     "types": [
       "node"
     ],

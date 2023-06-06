@@ -24,6 +24,6 @@ module.exports = {
     // 'svelte/rule-name': 'error'
   },
   "ignorePatterns": [
-    "postcss.config.js", "svelte.config.js", "tailwind.config.cjs", ".eslintrc.cjs"
+    "postcss.config.js", "svelte.config.js", "tailwind.config.cjs", ".eslintrc.cjs", "vite.config.ts"
   ]
 }

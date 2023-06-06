@@ -1,0 +1,53 @@
+.table {
+  @apply divide-y divide-solid divide-gray-300;
+  th {
+    @apply px-2 py-1 font-semibold text-gray-600 align-top cursor-pointer;
+  }
+  thead > tr {
+    @apply border-b-2 border-gray-500;
+  }
+  thead {
+    tr {
+      th:first-child {
+        @apply pl-2;
+      }
+      th:last-child {
+        @apply pr-2;
+      }
+    }
+  }
+  td {
+    @apply px-2 md:py-1;
+  }
+  tbody {
+    tr {
+      @apply align-top hover:bg-yellow-100 print:border-b print:border-gray-600;
+      td:first-child {
+        @apply pl-2;
+      }
+      td:last-child {
+        @apply pr-2;
+      }
+    }
+  }
+
+  &.is-bordered td { border-width: 1px;}
+  &.is-bordered th { border-width: 1px; }
+  &.is-bordered tr {
+    &:last-child td, th { border-bottom-width: 1px; }
+  }
+
+  &.is-striped {
+    tbody {
+      tr:nth-child(even) {
+        background-color: lightgoldenrodyellow;
+      }
+    }
+  }
+
+  &.is-hoverable {
+    tbody {
+      tr:hover { @apply bg-yellow-200 }
+    }
+  }
+}

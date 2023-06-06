@@ -1,5 +1,5 @@
 <script>
-  import { moneyFmt } from '../../utils'
+  import { moneyFmt } from '$lib/utils'
   let summary = {}
   let msummary = {}
   export let payroll = []

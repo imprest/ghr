@@ -1,5 +1,5 @@
 <script>
-  import { moneyFmt } from "../../utils";
+  import { moneyFmt } from "$lib/utils";
   let summary = {};
   let h = 0;
   let headerHeight = document.getElementsByClassName('header')[0].clientHeight;
