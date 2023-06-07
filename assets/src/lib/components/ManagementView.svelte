@@ -26,8 +26,8 @@
   }
 </script>
 
-<section class="wrapper">
-  <table class="table mx-auto">
+<section class="section">
+  <table class="table is-striped mx-auto">
     <thead>
       <tr>
         <th>ID</th>

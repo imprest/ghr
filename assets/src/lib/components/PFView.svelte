@@ -27,8 +27,9 @@
   }
 </script>
 
-<section class="wrapper">
-  <table class="table mx-auto">
+<section class="section">
+  <div class="overflow-x-auto">
+  <table class="table mx-auto is-striped">
     <thead>
       <tr>
         <th>ID</th>
@@ -67,4 +68,6 @@
       </tr>
     </tfoot>
   </table>
+
+  </div>
 </section>

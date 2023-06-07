@@ -1,18 +1,21 @@
-.button {
+button {
   @apply
     appearance-none content-center items-center
     inline-flex mb-1 py-1 px-4 font-semibold shadow-sm rounded-sm
     cursor-pointer outline-none
-    bg-primary text-primary-foreground
-    dark:bg-black;
+    transition-colors duration-100
+    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
+    disabled:opacity-50 disabled:pointer-events-none ring-offset-background
+    bg-primary text-primary-foreground;
 
   &:is([aria-current], :hover, :focus-visible) {
-    @apply bg-primary-hover ring-primary-focus
+    @apply bg-primary-hover ring-primary-focus text-primary-foreground;
   }
 
   &:is(:active) { @apply bg-primary-active }
 }
-.button.secondary {
+
+button.secondary {
   @apply bg-secondary text-secondary-foreground;
 
   &:is([aria-current], :hover, :focus-visible) {
@@ -22,7 +25,7 @@
   &:is(:active) { @apply bg-secondary-active }
 }
 
-.button.error { @apply bg-error text-error-foreground; }
-.button.warning { @apply bg-warning text-warning-foreground; }
-.button.info { @apply bg-info text-info-foreground; }
-.button.success { @apply bg-success text-success-foreground; }
+button.error { @apply bg-error text-error-foreground; }
+button.warning { @apply bg-warning text-warning-foreground; }
+button.info { @apply bg-info text-info-foreground; }
+button.success { @apply bg-success text-success-foreground; }

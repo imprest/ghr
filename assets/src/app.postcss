@@ -8,91 +8,72 @@
 @layer base {
   :root {
     --header-height: 3rem;
-
     --background: 0 0% 100%;
     --foreground: 222.2 47.4% 11.2%;
-
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
-
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 47.4% 11.2%;
-
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-
     --card: 0 0% 100%;
     --card-foreground: 222.2 47.4% 11.2%;
-
     --primary: 200 98% 39%;
-    --primary-foreground: 210 40% 98%;
+    --primary-foreground: 0 0% 100%;
     --primary-hover: 201 96% 32%;
     --primary-focus: 200 98% 39%;
     --primary-active: 201 90% 27%;
-    --primary-inverse: white;
-
-
     --secondary: 291 47% 60%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary-foreground: 0 0% 0%;
     --secondary-hover: 201 96% 32%;
     --secondary-focus: 200 98% 39%;
     --secondary-active: 201 90% 27%;
-    --secondary-inverse: white;
-
+    --destructive: 1 83% 63%;
+    --destructive-foreground: white;
+    --ring: 215 20.2% 65.1%;
+    --radius: 0.5rem;
+    /* same as destructive */
     --error: 1 83% 63%;
-    --error-foreground: 1 83% 63%;
-
+    --error-foreground: 0 0% 100%;
     --warning: 1 83% 63%;
     --warning-foreground: 1 83% 63%;
-
-    --info: 1 83% 63%;
-    --info-foreground: 1 83% 63%;
-
+    --info: 199 98% 48%;
+    --info-foreground: white;
     --success: 1 83% 63%;
     --success-foreground: 1 83% 63%;
-
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 92% 38%;
-    --destructive-foreground: 210 40% 98%;
-
-    --ring: 215 20.2% 65.1%;
-
-    --radius: 0.5rem;
   }
-
   .dark {
     --background: 224 71% 4%;
     --foreground: 213 31% 91%;
-
     --muted: 223 47% 11%;
     --muted-foreground: 215.4 16.3% 56.9%;
-
     --accent: 216 34% 17%;
     --accent-foreground: 210 40% 98%;
-
     --popover: 224 71% 4%;
     --popover-foreground: 215 20.2% 65.1%;
-
     --border: 216 34% 17%;
     --input: 216 34% 17%;
-
     --card: 224 71% 4%;
     --card-foreground: 213 31% 91%;
-
     --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 1.2%;
-
     --secondary: 222.2 47.4% 11.2%;
     --secondary-foreground: 210 40% 98%;
-
     --destructive: 359 51% 48%;
     --destructive-foreground: 210 40% 98%;
-
     --ring: 216 34% 17%;
-
     --radius: 0.5rem;
+    /* same as destructive */
+    --error: 1 83% 63%;
+    --error-foreground: white;
+    --warning: 1 83% 63%;
+    --warning-foreground: 1 83% 63%;
+    --info: 199 98% 48%;
+    --info-foreground: white;
+    --success: 1 83% 63%;
+    --success-foreground: 1 83% 63%;
   }
 
   html {
@@ -154,9 +135,16 @@
     height: var(--header-height);
   }
 
+  .title {
+    @apply text-2xl;
+  }
+  .sub-title {
+    @apply text-base;
+  }
+
   /* content */
   main {
-    @apply: h-full;
+    @apply h-full;
     margin-top: var(--header-height);
   }
 
@@ -184,5 +172,27 @@
 
   kbd {
     font-weight: bolder;
+  }
+
+  progress {
+    @apply inline-block appearance-none w-full h-2
+    mb-1 overflow-hidden border-0 rounded-sm bg-primary;
+  }
+
+  [dir="rtl"] {
+    @media (prefers-reduced-motion: no-preference) {
+      progress:indeterminate {
+        animation-direction: reverse;
+      }
+    }
+  }
+
+  @keyframes progress-indeterminate {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
   }
 }

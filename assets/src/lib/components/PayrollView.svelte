@@ -1,9 +1,8 @@
 <script>
   import { moneyFmt } from "$lib/utils";
+  import { onMount } from "svelte";
+
   let summary = {};
-  let h = 0;
-  let headerHeight = document.getElementsByClassName('header')[0].clientHeight;
-  let sectionHeight = document.getElementsByClassName('section')[0].clientHeight;
   const keys = [
     "days_worked", "base_salary", "earned_salary", "ssnit_amount", "pf_amount", "cash_allowance",
     "total_cash", "total_relief", "taxable_income", "tax_ded", "overtime_earned", "overtime_tax",
@@ -12,6 +11,15 @@
   ]
 
   export let payroll = [];
+
+  let h = 0;
+  let headerHeight = 0;
+  let sectionHeight = 0;
+  onMount(() => {
+    headerHeight = document.getElementsByClassName('header')[0].clientHeight;
+    sectionHeight = document.getElementsByClassName('section')[0].clientHeight;
+  })
+
   $: if (payroll) {
     // New payroll data do initialise summary object to zeros
     keys.forEach((k) => summary[k] = 0)
@@ -28,7 +36,7 @@
 
 <section class="section-full">
   <div class="overflow-x-auto" style:height="{h-headerHeight-sectionHeight-40}px">
-    <table class="table is-striped is-bordered is-hoverable">
+    <table class="table is-striped is-bordered">
       <thead>
         <tr>
           <th class="text-center">ID</th>
@@ -136,13 +144,6 @@
 
   tfoot tr th {
     @apply bottom-0;
-  }
-
-  tbody tr:hover{
-    @apply bg-yellow-300;
-    & span {
-        @apply bg-yellow-300;
-      }
   }
 
   tbody tr td:first-child {

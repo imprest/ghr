@@ -21,7 +21,7 @@
   }
   tbody {
     tr {
-      @apply align-top hover:bg-yellow-100 print:border-b print:border-gray-600;
+      @apply align-top hover:bg-primary/20 print:border-b print:border-gray-600;
       td:first-child {
         @apply pl-2;
       }
@@ -40,14 +40,9 @@
   &.is-striped {
     tbody {
       tr:nth-child(even) {
+        @apply hover:bg-primary/20;
         background-color: lightgoldenrodyellow;
       }
-    }
-  }
-
-  &.is-hoverable {
-    tbody {
-      tr:hover { @apply bg-yellow-200 }
     }
   }
 }

@@ -1,4 +1,4 @@
-const colors = require('tailwindcss/colors');
+// const colors = require('tailwindcss/colors');
 const { fontFamily } = require("tailwindcss/defaultTheme");
 
 /** @type {import('tailwindcss').Config} */
@@ -12,9 +12,6 @@ module.exports = {
     container: {
       center: true,
       padding: "2rem",
-      screens:{
-        "2xl": "1400px"
-      }
     },
     extend: {
       colors: {
@@ -31,7 +28,6 @@ module.exports = {
           hover: 'hsl(var(--primary-hover))',
           focus: 'hsl(var(--primary-focus))',
           active: 'hsl(var(--primary-active))',
-          inverse: 'hsl(var(--primary-inverse))'
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -39,7 +35,6 @@ module.exports = {
           hover: 'hsl(var(--secondary-hover))',
           focus: 'hsl(var(--secondary-focus))',
           active: 'hsl(var(--secondary-active))',
-          inverse: 'hsl(var(--secondary-inverse))'
         },
         error: {
           DEFAULT: "hsl(var(--error))",

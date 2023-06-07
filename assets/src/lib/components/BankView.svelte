@@ -31,8 +31,8 @@
 
 <section class="section">
   <div class="flex flex-col gap-8 lg:flex-row">
-  <div>
-  <table class="table mx-auto">
+  <div class="overflow-x-auto">
+  <table class="table mx-auto is-striped">
     <thead>
       <tr>
         <th>ID</th>
@@ -65,7 +65,7 @@
   </table>
   </div>
   <div>
-  <table class="table mx-auto">
+  <table class="table mx-auto is-striped">
     <thead>
       <tr>
         <th>ID</th>

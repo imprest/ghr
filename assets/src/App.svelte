@@ -11,7 +11,6 @@
   import ManagementView from "$components/ManagementView.svelte";
   import GRAView from "$components/GRAView.svelte";
   import { getPayroll, data } from "./store.js";
-  import {Button} from "$ui/button";
 
   let year = CUR_YEAR;
   let month = CUR_MONTH;
@@ -51,12 +50,10 @@
     <ul><li><a href="/">Logout</a></li></ul>
   </nav>
 </header>
-<main class="container-full pt-4">
+<main class="pt-4">
   <section class="section">
     <div class="flex flex-col sm:flex-row gap-2 items-baseline">
-      <button class="button">Test</button>
-      <button class="button secondary">Test</button>
-      <Button>Test</Button>
+      <button>Test</button>
       <div class="select-combo flex-grow">
         <label for="view"> View </label>
         <select id="view" bind:value={view}>
@@ -91,7 +88,7 @@
     {#if view === "Attendance"}
       <AttendanceView {payroll} />
     {:else if view === "Advance"}
-      <PayrollFilterView {payroll} key={"advance"} header={"Advance"} />
+      <PayrollFilterView {payroll} key={"advance"} header={"Advance"} class="focus-visible:ring"/>
     {:else if view === "Loan"}
       <PayrollFilterView {payroll} key={"loan"} header={"Loan"} />
     {:else if view === "Pvt Loan"}
@@ -113,9 +110,3 @@
     {/if}
   {/if}
 </main>
-
-<style lang="postcss">
-  :global(html) {
-    @apply bg-white;
-  }
-</style>
