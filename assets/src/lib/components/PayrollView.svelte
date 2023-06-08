@@ -39,8 +39,8 @@
     <table class="table is-striped is-bordered">
       <thead>
         <tr>
-          <th class="text-center">ID</th>
-          <th>Name</th>
+          <th class="text-center"><div>ID</div></th>
+          <th><div>Name</div></th>
           <th class="text-center">Days</th>
           <th class="text-center">Basic Salary</th>
           <th class="text-center">Earned Salary</th>
@@ -135,15 +135,18 @@
 <style lang="postcss">
   thead tr th,
   tfoot tr th {
-    @apply sticky z-30 bg-white;
+    @apply sticky z-20;
   }
 
   thead tr th {
-    @apply top-0;
+    @apply top-0 h-px;
   }
+  thead th:first-child { @apply sticky left-0 z-30; }
+  thead th:nth-child(2) { @apply sticky left-14 z-30; }
+  thead th > div { @apply bg-white inline-table h-full w-full; }
 
   tfoot tr th {
-    @apply bottom-0;
+    @apply bottom-0 bg-white;
   }
 
   tbody tr td:first-child {

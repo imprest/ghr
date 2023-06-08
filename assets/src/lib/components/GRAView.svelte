@@ -1,5 +1,6 @@
 <script>
   import { moneyFmt } from '$lib/utils'
+  import { onMount } from 'svelte';
   let summary = {}
   let msummary = {}
   export let payroll = []
@@ -81,10 +82,19 @@
       msummary.total_tax += Number.parseFloat(x.total_tax);
     })
   }
+
+  let h = 0;
+  let headerHeight = 0;
+  let sectionHeight = 0;
+  onMount(() => {
+    headerHeight = document.getElementsByClassName('header')[0].clientHeight;
+    sectionHeight = document.getElementsByClassName('section')[0].clientHeight;
+  })
 </script>
 
+<svelte:window bind:innerHeight={h}/>
 <section class="section max-w-full">
-  <div class="max-w-98vw max-h-resp overflow-x-auto">
+  <div style="height: {h-headerHeight-sectionHeight-40}px" class="overflow-x-auto print:overflow-visible">
     <table class="table">
       <thead class="h-20">
         <tr>

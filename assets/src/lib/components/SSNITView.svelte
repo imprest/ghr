@@ -40,6 +40,7 @@
 </script>
 
 <section class="section">
+  <div class="overflow-x-auto">
     <table class="table is-striped mx-auto">
       <thead>
         <tr>
@@ -100,4 +101,5 @@
         </tr>
       </tfoot>
     </table>
+  </div>
 </section>
