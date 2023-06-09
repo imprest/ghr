@@ -22,6 +22,7 @@ module.exports = {
         foreground: "hsl(var(--foreground))",
         transparent: 'transparent',
         current: 'currentColor',
+        highlight: "hsl(var(--table-hover))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",

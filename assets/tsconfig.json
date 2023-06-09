@@ -8,6 +8,7 @@
       "$components/*": ["./src/lib/components/*"],
       "$ui": ["./src/lib/components/ui"],
       "$ui/*": ["./src/lib/components/ui/*"],
+      "$store": ["./src/store"],
     },
     "types": [
       "node"

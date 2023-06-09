@@ -21,7 +21,7 @@
   }
   tbody {
     tr {
-      @apply align-top hover:bg-primary/20 print:border-b print:border-gray-600;
+      @apply align-top hover:bg-highlight print:border-b print:border-gray-600;
       td:first-child {
         @apply pl-2;
       }
@@ -32,7 +32,7 @@
   }
 
   &.is-bordered td { border-width: 1px;}
-  &.is-bordered th { border-width: 1px; }
+  &.is-bordered th { border-width: 0px; }
   &.is-bordered tr {
     &:last-child td, th { border-bottom-width: 1px; }
   }
@@ -40,7 +40,7 @@
   &.is-striped {
     tbody {
       tr:nth-child(even) {
-        @apply hover:bg-primary/20;
+        @apply hover:bg-highlight;
         background-color: lightgoldenrodyellow;
       }
     }

@@ -16,6 +16,7 @@ export default defineConfig(({ command }: any) => {
   return {
     resolve: {
       alias: {
+        "$store": path.resolve(__dirname, "./src/store"),
         "$lib": path.resolve(__dirname, "./src/lib"),
         "$lib/*": path.resolve(__dirname, "./src/lib/*"),
         "$components": path.resolve(__dirname, "./src/lib/components"),

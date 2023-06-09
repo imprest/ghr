@@ -1,19 +1,12 @@
 <script lang="ts">
   import { MONTHS, CUR_YEARS, CUR_YEAR, CUR_MONTH } from "$lib/utils";
   import { onMount } from "svelte";
-  import PayrollView from "$components/PayrollView.svelte";
-  import PayrollFilterView from "$components/PayrollFilterView.svelte";
-  import AttendanceView from "$components/AttendanceView.svelte";
-  import SSNITView from "$components/SSNITView.svelte";
-  import PFView from "$components/PFView.svelte";
-  import OvertimeView from "$components/OvertimeView.svelte";
-  import BankView from "$components/BankView.svelte";
-  import ManagementView from "$components/ManagementView.svelte";
-  import GRAView from "$components/GRAView.svelte";
-  import { getPayroll, data } from "./store.js";
+  import PayrollViews from "$lib/components/PayrollViews.svelte";
+  import { getPayroll, data } from "./store";
 
   let year = CUR_YEAR;
   let month = CUR_MONTH;
+  let view = "Default";
   let views = [
     "Default",
     "Attendance",
@@ -27,19 +20,17 @@
     "GRA",
     "Overtime",
   ];
-  let view = "Default";
-
-  $: payroll = $data.payroll;
-  $: management = $data.management;
 
   onMount(() => {
-    getPayroll(CUR_YEAR, CUR_MONTH);
+    getPayroll(CUR_YEAR, 5) // CUR_MONTH ); // TODO reset
   });
 
   const yearChanged = () => getMonthlyPayroll(year, month);
   const monthChanged = () => getMonthlyPayroll(year, month);
   const getMonthlyPayroll = (year: number, month: number) => getPayroll(year, month);
+
 </script>
+
 
 <!-- <header class="border-gray-300 border-b h-10"> -->
 <header class="header">
@@ -84,29 +75,9 @@
     </div>
   </section>
 
-  {#if payroll.length > 0}
-    {#if view === "Attendance"}
-      <AttendanceView {payroll} />
-    {:else if view === "Advance"}
-      <PayrollFilterView {payroll} key={"advance"} header={"Advance"} class="focus-visible:ring"/>
-    {:else if view === "Loan"}
-      <PayrollFilterView {payroll} key={"loan"} header={"Loan"} />
-    {:else if view === "Pvt Loan"}
-      <PayrollFilterView {payroll} key={"pvt_loan"} header={"Pvt Loan"} />
-    {:else if view === "SSNIT"}
-      <SSNITView {payroll} {management} />
-    {:else if view === "PF"}
-      <PFView {payroll} />
-    {:else if view === "Overtime"}
-      <OvertimeView {payroll} />
-    {:else if view === "Bank"}
-      <BankView {payroll} />
-    {:else if view === "Management"}
-      <ManagementView {management} />
-    {:else if view === "GRA"}
-      <GRAView {payroll} {management} />
-    {:else}
-      <PayrollView {payroll} />
-    {/if}
+  {#if $data.payroll.length > 0}
+    <PayrollViews {view}/>
+  {:else}
+    <div>No Data for this month.</div>
   {/if}
 </main>
