@@ -1,10 +1,11 @@
 <script>
   import { moneyFmt } from '$lib/utils';
-
-  export let payroll = []
-  export let management = []
+  import { data } from '$store';
 
   let summary = {}
+
+  $: payroll = $data.payroll
+  $: management = $data.payroll
 
   $: if (payroll || management) {
     summary = {

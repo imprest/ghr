@@ -1,8 +1,13 @@
 <script lang="ts">
-  import Default from "./PayrollViews/Default.svelte";
-  import Advance from "./PayrollViews/Advance.svelte";
-  import Attendance from "./PayrollViews/Attendance.svelte";
   import { onMount } from "svelte";
+  import Default from "./PayrollViews/Default.svelte";
+  import Attendance from "./PayrollViews/Attendance.svelte";
+  import Filter from "./PayrollViews/Filter.svelte";
+  import Bank from "./PayrollViews/Bank.svelte";
+  import Management from "./PayrollViews/Management.svelte";
+  import Overtime from "./PayrollViews/Overtime.svelte";
+  import PF from "./PayrollViews/PF.svelte";
+  import SSNIT from "./PayrollViews/SSNIT.svelte";
 
   export let view = "Default";
 
@@ -24,7 +29,21 @@
   {#if view === "Attendance"}
     <Attendance />
   {:else if view === "Advance"}
-    <Advance />
+    <Filter key={"advance"} />
+  {:else if view === "Bank"}
+    <Bank />
+  {:else if view === "Loan"}
+    <Filter key={"loan"} />
+  {:else if view === "Management"}
+    <Management />
+  {:else if view === "Pvt Loan"}
+    <Filter key={"pvt_loan"} />
+  {:else if view === "Overtime"}
+    <Overtime />
+  {:else if view === "PF"}
+    <PF />
+  {:else if view === "SSNIT"}
+    <SSNIT />
   {:else}
     <Default />
   {/if}

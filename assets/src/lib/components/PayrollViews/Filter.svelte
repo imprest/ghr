@@ -1,10 +1,12 @@
+
 <script>
   import { moneyFmt } from '$lib/utils'
   import { data } from '$store'
 
-  let key = 'advance'
+  export let key = 'advance'
   let total = 0
 
+  $: header = key.charAt(0).toUpperCase() + key.slice(1)
   $: payroll = $data.payroll
 
   $: if (payroll) {
@@ -21,7 +23,7 @@
     <tr>
       <th>ID</th>
       <th>Name</th>
-      <th class='text-center'>{key.toUpperCase()}</th>
+      <th class='text-right'>{header}</th>
     </tr>
   </thead>
   <tbody>

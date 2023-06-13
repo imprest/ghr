@@ -1,9 +1,10 @@
 <script>
   import { moneyFmt } from "$lib/utils";
-
-  export let payroll = [];
+  import { data } from "$store";
 
   let summary = {};
+
+  $: payroll = $data.payroll
 
   $: if (payroll) {
     summary = {
@@ -27,47 +28,42 @@
   }
 </script>
 
-<section class="section">
-  <div class="overflow-x-auto">
-  <table class="table mx-auto is-striped">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Fund ID</th>
-        <th>Name</th>
-        <th>Earned Income</th>
-        <th>PF Employee (8%)</th>
-        <th>PF Employer (2%)</th>
-        <th>Total (10%) </th>
-      </tr>
-    </thead>
-    <tbody>
-      {#each payroll as p}
-        {#if p.pf_amount > 0}
-          <tr>
-            <td> {p.id}</td>
-            <td> {p.pf_no}</td>
-            <td> {p.name}</td>
-            <td class="text-right">{moneyFmt(p.earned_salary)}</td>
-            <td class="text-right">{moneyFmt(p.pf_amount)}</td>
-            <td class="text-right">{moneyFmt(p.pf_emp_contrib)}</td>
-            <td class="text-right">{moneyFmt(p.pf_total)}</td>
-          </tr>
-        {/if}
-      {/each}
-    </tbody>
-    <tfoot>
-      <tr>
-        <th />
-        <th />
-        <th />
-        <th class="text-right">{moneyFmt(summary.earned_salary)}</th>
-        <th class="text-right">{moneyFmt(summary.pf_amount)}</th>
-        <th class="text-right">{moneyFmt(summary.pf_emp_contrib)}</th>
-        <th class="text-right">{moneyFmt(summary.pf_total)}</th>
-      </tr>
-    </tfoot>
-  </table>
-
-  </div>
-</section>
+<table class="table mx-auto is-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Fund ID</th>
+      <th>Name</th>
+      <th>Earned Income</th>
+      <th>PF Employee (8%)</th>
+      <th>PF Employer (2%)</th>
+      <th>Total (10%) </th>
+    </tr>
+  </thead>
+  <tbody>
+    {#each payroll as p}
+      {#if p.pf_amount > 0}
+        <tr>
+          <td> {p.id}</td>
+          <td> {p.pf_no}</td>
+          <td> {p.name}</td>
+          <td class="text-right">{moneyFmt(p.earned_salary)}</td>
+          <td class="text-right">{moneyFmt(p.pf_amount)}</td>
+          <td class="text-right">{moneyFmt(p.pf_emp_contrib)}</td>
+          <td class="text-right">{moneyFmt(p.pf_total)}</td>
+        </tr>
+      {/if}
+    {/each}
+  </tbody>
+  <tfoot>
+    <tr>
+      <th />
+      <th />
+      <th />
+      <th class="text-right">{moneyFmt(summary.earned_salary)}</th>
+      <th class="text-right">{moneyFmt(summary.pf_amount)}</th>
+      <th class="text-right">{moneyFmt(summary.pf_emp_contrib)}</th>
+      <th class="text-right">{moneyFmt(summary.pf_total)}</th>
+    </tr>
+  </tfoot>
+</table>
