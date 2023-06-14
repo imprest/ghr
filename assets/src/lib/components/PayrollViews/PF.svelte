@@ -17,7 +17,7 @@
     payroll.forEach((x) => {
       if (x.pf_amount == "0.00") return;
       t_pf_amount = Number.parseFloat(x.pf_amount);
-      x.pf_emp_contrib = +(Math.round(0.25 * t_pf_amount + "e+2") + "e-2");
+      x.pf_emp_contrib = +(Math.round(0.25 * Number.parseFloat(x.pf_amount + "e+2")) + "e-2");
       x.pf_total = x.pf_emp_contrib + t_pf_amount;
 
       summary.earned_salary += Number.parseFloat(x.earned_salary);

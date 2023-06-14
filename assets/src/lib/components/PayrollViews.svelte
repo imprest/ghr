@@ -8,6 +8,7 @@
   import Overtime from "./PayrollViews/Overtime.svelte";
   import PF from "./PayrollViews/PF.svelte";
   import SSNIT from "./PayrollViews/SSNIT.svelte";
+  import GRA from "./PayrollViews/GRA.svelte";
 
   export let view = "Default";
 
@@ -34,6 +35,8 @@
     <Bank />
   {:else if view === "Loan"}
     <Filter key={"loan"} />
+  {:else if view === "GRA"}
+    <GRA />
   {:else if view === "Management"}
     <Management />
   {:else if view === "Pvt Loan"}
