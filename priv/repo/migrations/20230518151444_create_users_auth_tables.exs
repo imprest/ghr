@@ -8,6 +8,8 @@ defmodule Ghr.Repo.Migrations.CreateUsersAuthTables do
       add :email, :citext, null: false
       add :hashed_password, :string, null: false
       add :name, :string, null: false
+      add :is_admin, :boolean, null: false, default: false
+      add :role, :text, null: false, default: "manager"
       add :confirmed_at, :naive_datetime
       timestamps()
     end
