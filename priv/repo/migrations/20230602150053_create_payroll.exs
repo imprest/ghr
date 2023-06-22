@@ -1,16 +1,8 @@
 defmodule Ghr.Repo.Migrations.CreatePayroll do
   use Ecto.Migration
 
-  def change do
-    create table(:orgs) do
-      add :org, :text, null: false
-      timestamps()
-  end
-
-  create unique_index(:orgs, [:name])
-
-  create table(:emp_base, primary_key: false) do
-    add :id, :text, primary_key: false # combine with <org_id>_<emp_id>
+  create table(:emps, primary_key: false) do
+    add :id, :text, primary_key: true # combine with <org_id>_<emp_id>
     add :org_id, references(:orgs, on_delete: :nothing), null: false
     add :emp_id, :text, null: false
     add :tin, :text, null: false
@@ -28,12 +20,12 @@ defmodule Ghr.Repo.Migrations.CreatePayroll do
     add :base_salary, :decimal, null: false, default: 0.00, precision: 20, scale: 2
     add :days, :decimal, null: false, default: 27.00, precision: 20, scale: 2
     add :second_job, :boolean, null: false, default: false
-    add :ssnit_percent, decimal, null: false, default: 0.00, precision: 20, scale: 2
+    add :ssnit_percent, :decimal, null: false, default: 0.00, precision: 20, scale: 2
     add :ssnit_id, :string
-    add :pf_percent, decimal, null: false, default: 0.00, precision: 20, scale: 2
+    add :pf_percent, :decimal, null: false, default: 0.00, precision: 20, scale: 2
     add :pf_id, :string
-    add :ded_tuc_percent, decimal, null: false, default: 0.00, precision: 20, scale: 2
-    add :ded_welfare, decimal, null: false, default: 0.00, precision: 20, scale: 2
+    add :ded_tuc_percent, :decimal, null: false, default: 0.00, precision: 20, scale: 2
+    add :ded_welfare, :decimal, null: false, default: 0.00, precision: 20, scale: 2
     add :cash_allowance, :decimal, null: false, default: 0.00, precision: 20, scale: 2
     # Accommodation element: ~ 10% of basic salary for fully furnished or staying alone
     # 2.5% of basic salary for shared accommodation
@@ -51,11 +43,11 @@ defmodule Ghr.Repo.Migrations.CreatePayroll do
     timestamps()
   end
 
-  create unique_index(:emp_base, [:org_id, :emp_id])
-  create unique_index(:emp_base, [:org_id, :tin])
-  create index(:emp_base, [:org_id])
+  create unique_index(:emps, [:org_id, :emp_id])
+  create unique_index(:emps, [:org_id, :tin])
+  create index(:emps, [:org_id])
 
-  create_table(:month, primary_key: false) do
+  create table(:month, primary_key: false) do
     add :id, :text, primary: true # org_id_YYYYMM
     add :org_id, references(:orgs, on_delete: :nothing), null: false
     add :month, :date, null: false
@@ -85,8 +77,8 @@ defmodule Ghr.Repo.Migrations.CreatePayroll do
 
   create table(:month_payroll, primary_key: false) do
     add :id, :text, primary: true # org_id_YYYYMM_emp_id
-    add :month_id, references(:month, on_delete: :nothing, type: string), null: false
-    add :emp_id, references(:emp_base, on_delete: :nothing, type: string), null: false
+    add :month_id, references(:month, on_delete: :nothing, type: :string), null: false
+    add :emp_id, references(:emps, on_delete: :nothing, type: :string), null: false
     add :tin, :text, null: false
     add :emp_name, :text, null: false
     add :paid_via, :string, null: false, default: "CASH"
@@ -95,9 +87,9 @@ defmodule Ghr.Repo.Migrations.CreatePayroll do
     add :emp_type, :text, null: false, default: "Resident-Full-Time"
     add :base_salary, :decimal, null: false, default: 0.00, precision: 20, scale: 2
     add :second_job, :boolean, null: false, default: false
-    add :ssnit_percent, decimal, null: false, default: 0.00, precision: 20, scale: 2
+    add :ssnit_percent, :decimal, null: false, default: 0.00, precision: 20, scale: 2
     add :ssnit_id, :string
-    add :pf_percent, decimal, null: false, default: 0.00, precision: 20, scale: 2
+    add :pf_percent, :decimal, null: false, default: 0.00, precision: 20, scale: 2
     add :pf_id, :string
     add :days, :decimal, null: false, default: 27.00, precision: 20, scale: 2
     add :earned_salary, :decimal, null: false, default: 0.00, precision: 20, scale: 2
@@ -146,10 +138,10 @@ defmodule Ghr.Repo.Migrations.CreatePayroll do
   create unique_index(:month_payroll, [:month_id, :emp_id])
   create index(:month_payroll, [:month_id])
 
-  create_table(:overtime, primary_key: false) do
+  create table(:overtime, primary_key: false) do
     add :id, :text, primary: true # org_id_YYYYMM_emp_id
-    add :month_id, references(:month, on_delete: :nothing, type: string), null: false
-    add :emp_id, references(:emp_base, on_delete: :nothing, type: :string), null: false
+    add :month_id, references(:month, on_delete: :nothing, type: :string), null: false
+    add :emp_id, references(:emps, on_delete: :nothing, type: :string), null: false
     # enforce date falls in the month_id range
     add :date, :date, null: false, default: fragment("now()")
     add :time, :time, null: false

@@ -6,7 +6,10 @@ defmodule Ghr.Accounts.User do
     field :email, :string
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
+    field :is_admin, :boolean
+    field :role, :string
     field :confirmed_at, :utc_datetime
+    belongs_to :org, Ghr.Accounts.Org
 
     timestamps()
   end
@@ -36,7 +39,7 @@ defmodule Ghr.Accounts.User do
   """
   def registration_changeset(user, attrs, opts \\ []) do
     user
-    |> cast(attrs, [:email, :password])
+    |> cast(attrs, [:email, :password, :is_admin])
     |> validate_email(opts)
     |> validate_password(opts)
   end

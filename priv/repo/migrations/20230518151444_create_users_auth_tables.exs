@@ -4,7 +4,15 @@ defmodule Ghr.Repo.Migrations.CreateUsersAuthTables do
   def change do
     execute "CREATE EXTENSION IF NOT EXISTS citext", ""
 
+    create table(:orgs) do
+      add :org, :text, null: false
+      timestamps()
+    end
+
+    create unique_index(:orgs, [:org])
+
     create table(:users) do
+      add :org_id, references(:orgs, on_delete: :nothing), null: false
       add :email, :citext, null: false
       add :hashed_password, :string, null: false
       add :name, :string, null: false
@@ -15,6 +23,7 @@ defmodule Ghr.Repo.Migrations.CreateUsersAuthTables do
     end
 
     create unique_index(:users, [:email])
+    create index(:users, [:org_id])
 
     create table(:users_tokens) do
       add :user_id, references(:users, on_delete: :delete_all), null: false
