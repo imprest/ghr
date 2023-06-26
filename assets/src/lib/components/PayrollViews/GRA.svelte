@@ -92,14 +92,17 @@
   }
 
 </script>
-<p class="section">
-  Management Income: {moneyFmt(msummary.taxable_income)} | Tax: {moneyFmt(msummary.total_tax)}
-  <br>
-  Employee Income: {moneyFmt(summary.taxable_income)} | Tax: {moneyFmt(summary.total_tax)}
-  <br>
-  Total Income: {moneyFmt(summary.taxable_income+msummary.taxable_income)} |
-  Tax: {moneyFmt(summary.total_tax+msummary.total_tax)}
-</p>
+<div class="section sm:block md:flex lg:gap-4">
+  <p>
+    Management Income: {moneyFmt(msummary.taxable_income)} | Tax: {moneyFmt(msummary.total_tax)}
+  </p>
+  <p>
+    Employee Income: {moneyFmt(summary.taxable_income)} | Tax: {moneyFmt(summary.total_tax)}
+  </p>
+  <p>
+    Total Income: {moneyFmt(summary.taxable_income+msummary.taxable_income)} | Tax: {moneyFmt(summary.total_tax+msummary.total_tax)}
+  </p>
+</div>
 <table class="table is-striped is-bordered">
   <thead>
     <tr>
