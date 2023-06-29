@@ -376,12 +376,12 @@ defmodule Ghr.Data.ImportPayroll do
   defp gra_income_tax(taxable_income, 2023) do
     tax_table = [
       # [Chargeable income, % rate, cumulative tax]
-      [Decimal.new(402), Decimal.new(0), Decimal.new(0)],
-      [Decimal.new(512), Decimal.new("0.050"), Decimal.new(0)],
-      [Decimal.new(642), Decimal.new("0.100"), Decimal.new("5.5")],
-      [Decimal.new(3642), Decimal.new("0.175"), Decimal.new("18.5")],
-      [Decimal.new(20037), Decimal.new("0.250"), Decimal.new("543.5")],
-      [Decimal.new(50000), Decimal.new("0.300"), Decimal.new("4642.25")],
+      [Decimal.new(402)    , Decimal.new(0)      , Decimal.new(0)         ],
+      [Decimal.new(512)    , Decimal.new("0.050"), Decimal.new(0)         ],
+      [Decimal.new(642)    , Decimal.new("0.100"), Decimal.new("5.5")     ],
+      [Decimal.new(3642)   , Decimal.new("0.175"), Decimal.new("18.5")    ],
+      [Decimal.new(20037)  , Decimal.new("0.250"), Decimal.new("543.5")   ],
+      [Decimal.new(50000)  , Decimal.new("0.300"), Decimal.new("4642.25") ],
       [%Decimal{coef: :inf}, Decimal.new("0.350"), Decimal.new("13631.15")]
     ]
 

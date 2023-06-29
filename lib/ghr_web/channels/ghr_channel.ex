@@ -3,7 +3,6 @@ defmodule GhrWeb.GhrChannel do
   use ChannelHandler.Router
 
   alias GhrWeb.Presence
-  alias Ghr.Data.ImportPayroll, as: Payroll
 
   # plug GhrWeb.ChannelPlugs.EnsureAuthenticated
 
