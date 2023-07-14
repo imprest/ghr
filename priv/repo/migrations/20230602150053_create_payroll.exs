@@ -10,7 +10,7 @@ defmodule Ghr.Repo.Migrations.CreatePayroll do
       add :emp_name, :text, null: false
       add :dob, :date, null: false
       add :start_date, :date, null: false
-      add :stop_date, :date, null: true
+      add :stop_date, :date, null: true, default: nil
       # Paid via: CASH, UMB, ABSA, MOMO etc CASH is special
       add :paid_via, :string, null: false, default: "CASH"
       add :emp_account, :string, null: false, default: "CASH"
@@ -49,7 +49,7 @@ defmodule Ghr.Repo.Migrations.CreatePayroll do
 
     create index(:emps, [:org_id])
     create unique_index(:emps, [:org_id, :emp_id])
-    create unique_index(:emps, [:org_id, :tin])
+    # create unique_index(:emps, [:org_id, :tin])
 
     create table(:months, primary_key: false) do
       add :id, :text, primary_key: true # org_id_YYYYMM

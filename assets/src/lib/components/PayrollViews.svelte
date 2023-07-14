@@ -17,38 +17,41 @@
   let sectionHeight = 0;
 
   onMount(() => {
-    headerHeight = document.getElementsByClassName('header')[0].clientHeight;
-    sectionHeight = document.getElementsByClassName('section')[0].clientHeight;
-  })
+    headerHeight = document.getElementsByClassName("header")[0].clientHeight;
+    sectionHeight = document.getElementsByClassName("section")[0].clientHeight;
+  });
 
-  $: tableHeight = `${(h - headerHeight - sectionHeight - 40)}px`;
+  $: tableHeight = `${h - headerHeight - sectionHeight - 40}px`;
 </script>
 
-<svelte:window bind:innerHeight={h}/>
+<svelte:window bind:innerHeight={h} />
 <section class="section-full">
-  <div style:height={tableHeight} class="overflow-x-auto print:overflow-visible">
-  {#if view === "Attendance"}
-    <Attendance />
-  {:else if view === "Advance"}
-    <Filter key={"advance"} />
-  {:else if view === "Bank"}
-    <Bank />
-  {:else if view === "Loan"}
-    <Filter key={"loan"} />
-  {:else if view === "GRA"}
-    <GRA />
-  {:else if view === "Management"}
-    <Management />
-  {:else if view === "Pvt Loan"}
-    <Filter key={"pvt_loan"} />
-  {:else if view === "Overtime"}
-    <Overtime />
-  {:else if view === "PF"}
-    <PF />
-  {:else if view === "SSNIT"}
-    <SSNIT />
-  {:else}
-    <Default />
-  {/if}
+  <div
+    style:height={tableHeight}
+    class="overflow-x-auto print:overflow-visible"
+  >
+    {#if view === "Attendance"}
+      <Attendance />
+    {:else if view === "Advance"}
+      <Filter key={"advance"} />
+    {:else if view === "Bank"}
+      <Bank />
+    {:else if view === "Loan"}
+      <Filter key={"loan"} />
+    {:else if view === "GRA"}
+      <GRA />
+    {:else if view === "Management"}
+      <Management />
+    {:else if view === "Pvt Loan"}
+      <Filter key={"pvt_loan"} />
+    {:else if view === "Overtime"}
+      <Overtime />
+    {:else if view === "PF"}
+      <PF />
+    {:else if view === "SSNIT"}
+      <SSNIT />
+    {:else}
+      <Default />
+    {/if}
   </div>
 </section>

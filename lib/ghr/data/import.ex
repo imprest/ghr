@@ -12,8 +12,8 @@ defmodule Ghr.Data.Import do
   @calculated_payroll "/home/hvaria/Documents/backup/HPMG22/H1DETPAY.DBF"
   @zero D.new(0)
 
-  def month(month) do
-    Dbase.parse(@employee_master,
+  def emp_master() do
+    emp_master = Dbase.parse(@employee_master,
       [
         "EMP_NO",
         "EMP_NM",
@@ -44,15 +44,16 @@ defmodule Ghr.Data.Import do
         %{
           id: "1_#{x["EMP_NO"]}",
           org_id: 1,
+          emp_id: x["EMP_NO"],
           emp_name: x["EMP_NM"],
           tin: parse_tin(x["EMP_FNO1"], x["EMP_FN04"]),
-          position: "junior",
-          emp_type: "Resident-Full-Time",
+          position: :"JUNIOR",
+          emp_type: :"Resident-Full-Time",
           base_salary: to_decimal(x["EMP_RATE"]),
           days: 27,
           second_job: false,
-          dob: parse_date(x["EMP_DOB"]),
-          start_date: parse_date(x["EMP_JOINDT"]),
+          dob: parse_date(x["EMP_DOB"], ~D[1970-01-01]),
+          start_date: parse_date(x["EMP_JOINDT"], ~D[1994-01-01]),
           stop_date: parse_terminated(x["EMP_RTBASE"], x["EMP_DISCDT"], x["EMP_LMD"]),
           paid_via: parse_cash(x["EMP_CB"], String.slice(x["EMP_BKDET"], 0, 3)),
           emp_account: parse_account(x["EMP_BKDET"]),
@@ -73,14 +74,16 @@ defmodule Ghr.Data.Import do
           non_cash: @zero,
           inserted_by_id: 1,
           updated_by_id: 1,
-          created_at: to_timestamp(x["EMP_LMD"], x["EMP_LMT"]),
+          inserted_at: to_timestamp(x["EMP_LMD"], x["EMP_LMT"]),
           updated_at: to_timestamp(x["EMP_LMD"], x["EMP_LMT"])
         }
       end
     )
-    |> Enum.reduce(%{}, fn x, acc ->
-      Map.put(acc, x.id, x)
-    end)
+    # |> Enum.reduce(%{}, fn x, acc ->
+    #   Map.put(acc, x.id, x)
+    # end)
+
+    Repo.insert_all(Ghr.Payroll.Emp, emp_master)
   end
 
   defp parse_tin(tin, nil), do: tin
@@ -108,7 +111,7 @@ defmodule Ghr.Data.Import do
     account = String.split(details, "-", parts: 2) |> Enum.at(1)
     case account do
       :nil -> "CASH"
-      a -> a
+      a -> String.trim(a)
     end
   end
 
@@ -128,9 +131,11 @@ defmodule Ghr.Data.Import do
   defp parse_terminated("X", date, lmd), do: parse_terminated(date, lmd)
   defp parse_terminated("D", date, lmd), do: parse_terminated(date, lmd)
   defp parse_terminated("", lmd), do: to_date(lmd)
-  defp parse_terminated(date, _), do: to_date(date)
   defp parse_terminated(nil, lmd), do: to_date(lmd)
+  defp parse_terminated(date, _), do: to_date(date)
 
+  defp parse_date("", date), do: date
+  defp parse_date(date, _), do: parse_date(date)
   defp parse_date(""), do: nil
   defp parse_date(date), do: to_date(date)
 
