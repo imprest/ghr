@@ -10,11 +10,11 @@ const nf = new Intl.NumberFormat('en-GB', { minimumFractionDigits: 2, maximumFra
 const rf = new Intl.NumberFormat('en-GB', { minimumFractionDigits: 0 })
 const df = new Intl.DateTimeFormat('en-GB')
 
-export const MONTHS = [1,2,3,4,5,6,7,8,9,10,11,12]
+export const MONTHS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 export const BASE_YEAR = 2016
 export const CUR_YEARS = genCurYears()
 export const FIN_YEARS = genFinYears()
-export const CUR_YEAR  = CUR_YEARS[0]
+export const CUR_YEAR = CUR_YEARS[0]
 export const CUR_MONTH = new Date().getMonth() + 1
 export const CUR_DATE = new Date().toISOString().substr(0, 10)
 
