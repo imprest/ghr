@@ -13,72 +13,77 @@ defmodule Ghr.Data.Import do
   @zero D.new(0)
 
   def emp_master() do
-    emp_master = Dbase.parse(@employee_master,
-      [
-        "EMP_NO",
-        "EMP_NM",
-        "EMP_DOB",
-        "EMP_DEPT",
-        "EMP_CB",
-        "EMP_RATE",
-        "EMP_BKDET",
-        "EMP_SDEPT",
-        "EMP_DESIG",
-        "EMP_JOINDT",
-        "EMP_DISCDT",
-        "EMP_RTBASE",
-        "EMP_SSNO",
-        "EMP_FNO1",
-        "EMP_FNO2",
-        "EMP_FNO3",
-        "EMP_FNO4",
-        "EMP_ROT",
-        "EMP_OTHALL",
-        "EMP_DED1",
-        "EMP_DED2",
-        "EMP_SSFYN",
-        "EMP_TUCYN",
-        "EMP_LMD"
-      ],
-      fn x ->
-        %{
-          id: "1_#{x["EMP_NO"]}",
-          org_id: 1,
-          emp_id: x["EMP_NO"],
-          emp_name: x["EMP_NM"],
-          tin: parse_tin(x["EMP_FNO1"], x["EMP_FN04"]),
-          position: :"JUNIOR",
-          emp_type: :"Resident-Full-Time",
-          base_salary: to_decimal(x["EMP_RATE"]),
-          days: 27,
-          second_job: false,
-          dob: parse_date(x["EMP_DOB"], ~D[1970-01-01]),
-          start_date: parse_date(x["EMP_JOINDT"], ~D[1994-01-01]),
-          stop_date: parse_terminated(x["EMP_RTBASE"], x["EMP_DISCDT"], x["EMP_LMD"]),
-          paid_via: parse_cash(x["EMP_CB"], String.slice(x["EMP_BKDET"], 0, 3)),
-          emp_account: parse_account(x["EMP_BKDET"]),
-          dept: parse_dep(x["EMP_DEPT"]),
-          sub_dept: parse_sub_dept(x["EMP_SDEPT"]),
-          designation: nil?(x["EMP_DESIG"]),
-          ssnit_no: nil?(x["EMP_SSNO"]),
-          ssnit_t2_no: nil?(x["EMP_FNO2"]), # Enterprise
-          ssnit_percent: parse_ssnit_ded(x["EMP_SSFYN"], x["EMP_NO"]),
-          pf_no: nil?(x["EMP_FNO3"]),
-          pf_percent: to_decimal(x["EMP_DED2"]),
-          ded_tuc_percent: parse_tuc_ded(x["EMP_TUCYN"]),
-          ded_welfare: to_decimal(x["EMP_DED1"]),
-          note: nil?(x["EMP_ROT"]),
-          cash_allowance: to_decimal(x["EMP_OTHALL"]),
-          accommodation: @zero,
-          vehicle: @zero,
-          non_cash: @zero,
-          inserted_by_id: 1,
-          updated_by_id: 1,
-          inserted_at: to_timestamp(x["EMP_LMD"], x["EMP_LMT"]),
-          updated_at: to_timestamp(x["EMP_LMD"], x["EMP_LMT"])
-        }
-      end
-    )
+    emp_master =
+      Dbase.parse(
+        @employee_master,
+        [
+          "EMP_NO",
+          "EMP_NM",
+          "EMP_DOB",
+          "EMP_DEPT",
+          "EMP_CB",
+          "EMP_RATE",
+          "EMP_BKDET",
+          "EMP_SDEPT",
+          "EMP_DESIG",
+          "EMP_JOINDT",
+          "EMP_DISCDT",
+          "EMP_RTBASE",
+          "EMP_SSNO",
+          "EMP_FNO1",
+          "EMP_FNO2",
+          "EMP_FNO3",
+          "EMP_FNO4",
+          "EMP_ROT",
+          "EMP_OTHALL",
+          "EMP_DED1",
+          "EMP_DED2",
+          "EMP_SSFYN",
+          "EMP_TUCYN",
+          "EMP_LMD"
+        ],
+        fn x ->
+          %{
+            id: "1_#{x["EMP_NO"]}",
+            org_id: 1,
+            emp_id: x["EMP_NO"],
+            emp_name: x["EMP_NM"],
+            tin: parse_tin(x["EMP_FNO1"], x["EMP_FN04"]),
+            position: :JUNIOR,
+            emp_type: :"Resident-Full-Time",
+            base_salary: to_decimal(x["EMP_RATE"]),
+            days: 27,
+            second_job: false,
+            dob: parse_date(x["EMP_DOB"], ~D[1970-01-01]),
+            start_date: parse_date(x["EMP_JOINDT"], ~D[1994-01-01]),
+            stop_date: parse_terminated(x["EMP_RTBASE"], x["EMP_DISCDT"], x["EMP_LMD"]),
+            paid_via: parse_cash(x["EMP_CB"], String.slice(x["EMP_BKDET"], 0, 3)),
+            emp_account: parse_account(x["EMP_BKDET"]),
+            dept: parse_dep(x["EMP_DEPT"]),
+            sub_dept: parse_sub_dept(x["EMP_SDEPT"]),
+            designation: nil?(x["EMP_DESIG"]),
+            ssnit_no: nil?(x["EMP_SSNO"]),
+            # Enterprise
+            ssnit_t2_no: nil?(x["EMP_FNO2"]),
+            ssnit_percent: parse_ssnit_ded(x["EMP_SSFYN"], x["EMP_NO"]),
+            pf_no: nil?(x["EMP_FNO3"]),
+            nia_no: nil?(x["EMP_FNO4"]),
+            pf_percent: to_decimal(x["EMP_DED2"]),
+            ded_tuc_percent: parse_tuc_ded(x["EMP_TUCYN"]),
+            ded_welfare: to_decimal(x["EMP_DED1"]),
+            note: nil?(x["EMP_ROT"]),
+            cash_allowance: to_decimal(x["EMP_OTHALL"]),
+            accommodation: @zero,
+            vehicle: @zero,
+            non_cash: @zero,
+            inserted_by_id: 1,
+            updated_by_id: 1,
+            inserted_at: to_timestamp(x["EMP_LMD"], x["EMP_LMT"]),
+            updated_at: to_timestamp(x["EMP_LMD"], x["EMP_LMT"])
+          }
+        end
+      )
+
     # |> Enum.reduce(%{}, fn x, acc ->
     #   Map.put(acc, x.id, x)
     # end)
@@ -109,8 +114,9 @@ defmodule Ghr.Data.Import do
 
   defp parse_account(details) do
     account = String.split(details, "-", parts: 2) |> Enum.at(1)
+
     case account do
-      :nil -> "CASH"
+      nil -> "CASH"
       a -> String.trim(a)
     end
   end

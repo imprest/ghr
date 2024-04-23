@@ -18,8 +18,14 @@ defmodule Ghr.Payroll.Emp do
     field :paid_via, :string, default: "CASH"
     field :emp_account, :string, default: "CASH"
     # position: EXPATRIATE, MANAGEMENT, SENIOR, JUNIOR, OTHER
-    field :position, Ecto.Enum, default: :"JUNIOR", values: [:"EXPATRIATE", :"MANAGEMENT", :"SENIOR", :"JUNIOR"]
-    field :emp_type, Ecto.Enum, default: :"Resident-Full-Time", values: [:"Resident-Full-Time", :"Non-Resident", :"Resident-Part-Time", :"Resident-Casual"]
+    field :position, Ecto.Enum,
+      default: :JUNIOR,
+      values: [:EXPATRIATE, :MANAGEMENT, :SENIOR, :JUNIOR]
+
+    field :emp_type, Ecto.Enum,
+      default: :"Resident-Full-Time",
+      values: [:"Resident-Full-Time", :"Non-Resident", :"Resident-Part-Time", :"Resident-Casual"]
+
     field :base_salary, :decimal, default: 0
     field :days, :decimal, default: Decimal.new("27.00")
     field :second_job, :boolean, default: false
@@ -28,6 +34,7 @@ defmodule Ghr.Payroll.Emp do
     field :ssnit_t2_no, :string
     field :pf_percent, :decimal, default: 0.00
     field :pf_no, :string
+    field :nia_no, :string
     field :ded_tuc_percent, :decimal, default: 0.00
     field :ded_welfare, :decimal, default: 0.00
     field :cash_allowance, :decimal, default: 0.00
@@ -40,8 +47,10 @@ defmodule Ghr.Payroll.Emp do
     field :vehicle, :decimal, default: 0.00
     # Utilities etc. add monthly electricity and water consumption
     field :non_cash, :decimal, default: 0.00
-    field :dept, :string, default: "Administration" # ADMIN, FACTORY, SALES, BSV
-    field :sub_dept, :string, default: "Worker" # MR, DRIVER, MECHANIC, CEO, MANAGER etc
+    # ADMIN, FACTORY, SALES, BSV
+    field :dept, :string, default: "Administration"
+    # MR, DRIVER, MECHANIC, CEO, MANAGER etc
+    field :sub_dept, :string, default: "Worker"
     field :designation, :string
     field :note, :string
     belongs_to :inserted_by, Ghr.Accounts.User

@@ -29,7 +29,8 @@ defmodule Ghr.Data.ImportPayroll do
         vehicle,
         non_cash_percent,
         ssnit_ded,
-        ssnit_no
+        ssnit_no,
+        nia_no
       ] = String.split(x, ",")
 
       if month === m do
@@ -50,6 +51,7 @@ defmodule Ghr.Data.ImportPayroll do
           id: id,
           tin_no: tin_no,
           ssnit_no: ssnit_no,
+          nia_no: nia_no,
           name: name,
           gra_category: position,
           base_salary: earned_salary,
@@ -125,7 +127,8 @@ defmodule Ghr.Data.ImportPayroll do
         "EMP_SSNO",
         "EMP_FNO1",
         "EMP_FNO2",
-        "EMP_FNO3"
+        "EMP_FNO3",
+        "EMP_FNO4"
       ],
       fn x ->
         %{
@@ -137,7 +140,8 @@ defmodule Ghr.Data.ImportPayroll do
           ssnit_no: x["EMP_SSNO"],
           tin_no: x["EMP_FNO1"],
           ssnit_t2: x["EMP_FNO2"],
-          pf_no: x["EMP_FNO3"]
+          pf_no: x["EMP_FNO3"],
+          nia_no: x["EMP_FNO4"]
         }
       end
     )
