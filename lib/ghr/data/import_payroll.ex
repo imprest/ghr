@@ -121,6 +121,7 @@ defmodule Ghr.Data.ImportPayroll do
       [
         "EMP_NO",
         "EMP_NM",
+        "EMP_DOB",
         "EMP_JOINDT",
         "EMP_DISCDT",
         "EMP_RTBASE",
@@ -134,6 +135,7 @@ defmodule Ghr.Data.ImportPayroll do
         %{
           id: x["EMP_NO"],
           name: x["EMP_NM"],
+          dob: parse_date(x["EMP_DOB"]),
           start_date: parse_date(x["EMP_JOINDT"]),
           end_date: parse_date(x["EMP_DISCDT"]),
           is_terminated: parse_terminated(x["EMP_RTBASE"]),

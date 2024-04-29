@@ -50,6 +50,7 @@
           <th class="text-center">Earned Income</th>
           <th class="text-center">SSNIT #      </th>
           <th class="text-center">NIA #        </th>
+          <th class="text-center">DOB          </th>
           <th class="text-center">SSNIT (13.0%)</th>
           <th class="text-center">SSNIT ( 5.5%)</th>
           <th class="text-center">SSNIT (18.5%)</th>
@@ -66,6 +67,7 @@
             <td class="text-right"> { moneyFmt(p.earned_salary    ) }</td>
             <td class="text-center">{ p.ssnit_no          }</td>
             <td class="text-center">{ p.nia_no            }</td>
+            <td class="text-center">{ p.dob               }</td>
             <td class="text-right"> { moneyFmt(p.ssnit_emp_contrib) }</td>
             <td class="text-right"> { moneyFmt(p.ssnit_amount     ) }</td>
             <td class="text-right"> { moneyFmt(p.ssnit_total      ) }</td>
@@ -82,6 +84,7 @@
             <td class="text-right"> { moneyFmt(m.earned_salary    ) }</td>
             <td class="text-center">{ m.ssnit_no          }</td>
             <td class="text-center">{ m.nia_no            }</td>
+            <td class="text-center"></td>
             <td class="text-right"> { moneyFmt(m.ssnit_emp_contrib) }</td>
             <td class="text-right"> { moneyFmt(m.ssnit_amount     ) }</td>
             <td class="text-right"> { moneyFmt(m.ssnit_total      ) }</td>
@@ -96,6 +99,7 @@
           <th></th>
           <th></th>
           <th class="text-right">{ moneyFmt(summary.earned_salary    ) }</th>
+          <th class="text-right"></th>
           <th class="text-right"></th>
           <th class="text-right"></th>
           <th class="text-right">{ moneyFmt(summary.ssnit_emp_contrib) }</th>
