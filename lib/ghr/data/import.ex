@@ -2,15 +2,26 @@ defmodule Ghr.Data.Import do
   require Logger
 
   import Ghr.Data.Utils, only: [to_date: 1, to_time: 1, to_decimal: 1, nil?: 1]
-  import Ecto.Query
 
   alias Ghr.Repo
   alias Ghr.Data.Dbase
   alias Decimal, as: D
 
-  @employee_master "/home/hvaria/Documents/backup/HPMG22/H1EMP.DBF"
-  @calculated_payroll "/home/hvaria/Documents/backup/HPMG22/H1DETPAY.DBF"
+  @root_folder "/home/hvaria/Documents/backup"
+  @employee_master Path.join(@root_folder, "HPMG22/H1EMP.DBF")
+  @calculated_payroll Path.join(@root_folder, "HPMG22/H1DETPAY.DBF")
   @zero D.new(0)
+
+  def rsync_db_files() do
+    args =
+      Enum.concat(["--timeout=60", "-av"], [
+        "/mnt/scl/HPMG22/H1EMP.DBF",
+        "/mnt/scl/HPMG22/H1DETPAY.DBF"
+      ])
+
+    cmd = Enum.concat(args, [Path.join(@root_folder, "/HPMG22")])
+    System.cmd("rsync", cmd)
+  end
 
   def emp_master() do
     emp_master =
