@@ -1,0 +1,214 @@
+@import "tailwindcss";
+@import "./css/button.css";
+@import "./css/layout.css";
+@import "./css/nav.css";
+@import "./css/select.css";
+@import "./css/table.css";
+@import "./css/tabs.css";
+@import "./css/tags.css";
+@import "tailwindcss/utilities";
+
+@theme {
+  --font-family-sans: "Inter", "Roboto", sans-serif;
+  --header-height: 3rem;
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(222.2, 47.4%, 11.2%);
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 47.4% 11.2%;
+  --border: 214.3 31.8% 91.4%;
+  --input: hsl(214.3, 31.8%, 91.4%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(222.2, 47.4%, 11.2%);
+  --color-primary: hsl(200, 98%, 39%);
+  --color-primary-foreground: hsl(0, 0%, 100%);
+  --color-primary-hover: hsl(201, 96%, 32%);
+  --color-primary-focus: hsl(200, 98%, 39%);
+  --color-primary-active: hsl(201, 90%, 27%);
+  --color-secondary: hsl(291, 47%, 60%);
+  --color-secondary-foreground: 0 0% 0%;
+  --color-secondary-hover: 201 96% 32%;
+  --color-secondary-focus: 200 98% 39%;
+  --color-secondary-active: 201 90% 27%;
+  --color-destructive: 1 83% 63%;
+  --color-destructive-foreground: white;
+  --color-ring: 215 20.2% 65.1%;
+  --radius: 0.5rem;
+  /* same as destructive */
+  --color-error: 1 83% 63%;
+  --color-error-foreground: 0 0% 100%;
+  --color-warning: 1 83% 63%;
+  --color-warning-foreground: 1 83% 63%;
+  --color-info: 199 98% 48%;
+  --color-info-foreground: white;
+  --color-success: 1 83% 63%;
+  --color-success-foreground: 1 83% 63%;
+  --color-accent: 210 40% 96.1%;
+  --color-accent-foreground: 222.2 47.4% 11.2%;
+  --color-table-hover: 201 65% 88%;
+  --color-highlight: hsl(201, 65%, 88%);
+}
+
+@layer base {
+  html {
+    box-sizing: border-box;
+    width: 100%;
+    text-rendering: optimizeLegibility;
+    font-smooth: antiliased;
+  }
+
+  body {
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    font-feature-settings:
+      "rlig" 1,
+      "calt" 1;
+  }
+
+  a {
+    @apply text-primary-focus;
+  }
+  a.secondary,
+  a.contrast {
+    @apply underline;
+  }
+
+  small {
+    @apply text-sm;
+  }
+  strong {
+    @apply text-gray-900;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bold;
+  }
+
+  h1 {
+    @apply text-4xl text-gray-900;
+  }
+  h2 {
+    @apply text-3xl text-gray-900;
+  }
+  h3 {
+    @apply text-2xl text-gray-800;
+  }
+  h4 {
+    @apply text-xl text-gray-700;
+  }
+  h5 {
+    @apply text-lg text-gray-600;
+  }
+  h6 {
+    @apply text-base text-gray-500;
+  }
+
+  hgroup {
+    @apply mb-1;
+
+    > * {
+      @apply mb-0;
+    }
+    > *:last-child {
+      @apply text-gray-500 text-base pl-0.5;
+    }
+  }
+
+  [type="checkbox"],
+  [type="radio"] {
+    @apply border-2;
+  }
+  [type="checkbox"][type="switch"] {
+    @apply border-[3px];
+  }
+
+  progress,
+  [type="checkbox"],
+  [type="radio"],
+  [type="range"] {
+    @apply accent-primary;
+  }
+
+  .skip-link {
+    @apply fixed top-0 left-0 right-0 text-center p-2 transform-gpu ease-in-out duration-300 bg-gray-600 text-white z-30;
+    translate: 0 -100%;
+  }
+
+  .skip-link:focus {
+    translate: 0 0;
+  }
+
+  .header {
+    @apply fixed top-0 left-0 z-10 bg-white border-b border-gray-300 w-full flex;
+    height: var(--header-height);
+  }
+
+  .title {
+    @apply text-2xl;
+  }
+  .sub-title {
+    @apply text-base;
+  }
+
+  /* content */
+  main {
+    @apply h-full;
+    margin-top: var(--header-height);
+  }
+
+  iframe {
+    display: none;
+  }
+
+  select {
+    @apply py-1 pr-10 pl-2;
+  }
+
+  input[type="search"],
+  input[type="date"] {
+    @apply py-1;
+  }
+
+  pre,
+  code,
+  kbd,
+  samp {
+    font-family: "Menlo", "Consolas", "Roboto Mono", "Ubuntu Monospace",
+      "Noto Mono", "Oxygen Mono", "Liberation Mono", monospace,
+      "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+      "Noto Color Emoji";
+  }
+
+  kbd {
+    font-weight: bolder;
+  }
+
+  progress {
+    @apply inline-block appearance-none w-full h-2
+    mb-1 overflow-hidden border-0 rounded-sm bg-primary;
+  }
+
+  [dir="rtl"] {
+    @media (prefers-reduced-motion: no-preference) {
+      progress:indeterminate {
+        animation-direction: reverse;
+      }
+    }
+  }
+
+  @keyframes progress-indeterminate {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+}

@@ -1,9 +1,3 @@
-@import "nav.postcss";
-@import "button.postcss";
-@import "table.postcss";
-@import "tags.postcss";
-@import "tabs.postcss";
-
 /* Select Combo */
 .select-combo {
   @apply flex;

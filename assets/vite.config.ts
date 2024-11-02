@@ -1,46 +1,47 @@
-import { defineConfig } from 'vite'
-import { svelte } from '@sveltejs/vite-plugin-svelte'
-import path from "path"
+import tailwindcss from "@tailwindcss/vite";
+import { defineConfig } from "vite";
+import { svelte } from "@sveltejs/vite-plugin-svelte";
+import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command }: any) => {
-  const isDev = command !== 'build'
+  const isDev = command !== "build";
   if (isDev) {
     // Terminate the watcher when phx quits
-    process.stdin.on('close', () => {
-      process.exit(0)
-    })
-    process.stdin.resume()
+    process.stdin.on("close", () => {
+      process.exit(0);
+    });
+    process.stdin.resume();
   }
 
   return {
     resolve: {
       alias: {
-        "$store": path.resolve(__dirname, "./src/store"),
-        "$lib": path.resolve(__dirname, "./src/lib"),
+        $store: path.resolve(__dirname, "./src/store"),
+        $lib: path.resolve(__dirname, "./src/lib"),
         "$lib/*": path.resolve(__dirname, "./src/lib/*"),
-        "$components": path.resolve(__dirname, "./src/lib/components"),
+        $components: path.resolve(__dirname, "./src/lib/components"),
         "$components/*": path.resolve(__dirname, "./src/lib/components/*"),
-        "$ui": path.resolve(__dirname, "./src/lib/components/ui"),
+        $ui: path.resolve(__dirname, "./src/lib/components/ui"),
         "$ui/*": path.resolve(__dirname, "./src/lib/components/ui/*"),
-      }
+      },
     },
-    plugins: [svelte()],
+    plugins: [tailwindcss(), svelte()],
     build: {
-      target: 'esnext',
+      target: "esnext",
       minify: true,
       outDir: "../priv/static/assets",
       emptyOutDir: true,
       assetsInlineLimit: 0,
       manifest: false,
       rollupOptions: {
-        input: ['src/main.ts', 'src/app.js'],
+        input: ["src/main.ts", "src/app.js"],
         output: {
-          entryFileNames: '[name].js',
-          chunkFileNames: '[name].js',
-          assetFileNames: '[name][extname]'
-        }
-      }
+          entryFileNames: "[name].js",
+          chunkFileNames: "[name].js",
+          assetFileNames: "[name][extname]",
+        },
+      },
     },
-  }
+  };
 });

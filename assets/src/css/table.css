@@ -31,10 +31,17 @@
     }
   }
 
-  &.is-bordered td { border-width: 1px;}
-  &.is-bordered th { border-width: 0px; }
+  &.is-bordered td {
+    border-width: 1px;
+  }
+  &.is-bordered th {
+    border-width: 0px;
+  }
   &.is-bordered tr {
-    &:last-child td, th { border-bottom-width: 1px; }
+    &:last-child td,
+    th {
+      border-bottom-width: 1px;
+    }
   }
 
   &.is-striped {
@@ -46,3 +53,4 @@
     }
   }
 }
+

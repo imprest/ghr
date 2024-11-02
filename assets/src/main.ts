@@ -1,4 +1,4 @@
-import "./app.postcss";
+import "./app.css";
 import "phoenix_html";
 import App from "./App.svelte";
 

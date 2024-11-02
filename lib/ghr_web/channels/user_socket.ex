@@ -26,7 +26,7 @@ defmodule GhrWeb.UserSocket do
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
   @impl true
-  def connect(%{"token"=> token}, socket, _connect_info) do
+  def connect(%{"token" => token}, socket, _connect_info) do
     case Phoenix.Token.verify(socket, "user socket", token, max_age: 1_209_600) do
       {:ok, user_id} ->
         name =
@@ -52,7 +52,7 @@ defmodule GhrWeb.UserSocket do
   #     Elixir.GhrWeb.Endpoint.broadcast("user_socket:#{user.id}", "disconnect", %{})
   #
   # Returning `nil` makes this socket anonymous.
-  #def id(_socket), do: nil
+  # def id(_socket), do: nil
   @impl true
   def id(socket), do: "user_socket:#{socket.assigns.user_id}"
 end
