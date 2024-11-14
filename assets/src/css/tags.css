@@ -3,5 +3,5 @@
 }
 
 .tag {
-  @apply text-xs mb-2 text-gray-600 bg-gray-100 py-1 px-2 rounded shadow-sm;
+  @apply text-xs mb-2 text-gray-600 bg-gray-100 py-1 px-2 rounded shadow-sm align-middle font-semibold;
 }

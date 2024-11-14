@@ -1,10 +1,10 @@
 .table {
-  @apply divide-y divide-solid divide-gray-300;
+  @apply divide-y divide-solid divide-gray-300 tabular-nums;
   th {
     @apply px-2 py-1 font-semibold text-gray-600 align-top cursor-pointer;
   }
   thead > tr {
-    @apply border-b-2 border-gray-500;
+    @apply border-b border-gray-500;
   }
   thead {
     tr {
@@ -17,11 +17,11 @@
     }
   }
   td {
-    @apply px-2 md:py-1;
+    @apply px-2 py-1;
   }
   tbody {
     tr {
-      @apply align-top hover:bg-highlight print:border-b print:border-gray-600;
+      @apply align-top print:border-b print:border-gray-600;
       td:first-child {
         @apply pl-2;
       }
@@ -47,10 +47,46 @@
   &.is-striped {
     tbody {
       tr:nth-child(even) {
-        @apply hover:bg-highlight;
-        background-color: lightgoldenrodyellow;
+        @apply bg-even-row;
       }
     }
   }
-}
 
+  &.is-hoverable {
+    tbody {
+      tr {
+        @apply hover:bg-highlight;
+      }
+    }
+  }
+
+  &.is-sticky {
+    thead,
+    tfoot {
+      @apply sticky z-30;
+    }
+
+    thead {
+      inset-block-start: 0;
+    }
+    thead tr th {
+      @apply sticky bg-white;
+    }
+    tfoot {
+      @apply bg-white;
+      inset-block-end: 0;
+    }
+
+    thead tr th:first-child,
+    tbody tr td:first-child {
+      @apply sticky z-20;
+      inset-inline-start: 0;
+    }
+
+    thead tr th:nth-child(2),
+    tbody tr td:nth-child(2) {
+      @apply sticky z-20;
+      /* inset-inline-start: 40px;  This has to been done dynamically in javascript*/
+    }
+  }
+}

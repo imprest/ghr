@@ -1,35 +1,35 @@
 
 <script>
   import { moneyFmt } from '$lib/utils'
-  import { data } from '$store'
+  import { model } from '../../../model.svelte'
 
-  let summary = {}
+  let management = $derived(model.management)
 
-  $: management = $data.management
-
-  $: if (management) {
-    summary = {
-      salary_total: 0,
-      total_additions: 0,
-      ssnit_amount:  0,
-      taxable_income: 0,
-      tax_ded: 0,
-      net_pay: 0
-    }
-    management.forEach(x => {
-      summary.salary_total += Number.parseFloat(x.earned_salary)
-      summary.total_additions += Number.parseFloat(x.total_additions)
-      summary.ssnit_amount += Number.parseFloat(x.ssnit_amount)
-      summary.taxable_income += Number.parseFloat(x.taxable_income)
-      summary.tax_ded += Number.parseFloat(x.tax_ded)
-      summary.net_pay += Number.parseFloat(x.net_pay)
-    })
-  }
+  let summary = $derived.by(() => {
+      let summary = {
+        salary_total: 0,
+        total_additions: 0,
+        ssnit_amount:  0,
+        taxable_income: 0,
+        tax_ded: 0,
+        net_pay: 0
+      }
+    
+      management.forEach(x => {
+        summary.salary_total += Number.parseFloat(x.earned_salary)
+        summary.total_additions += Number.parseFloat(x.total_additions)
+        summary.ssnit_amount += Number.parseFloat(x.ssnit_amount)
+        summary.taxable_income += Number.parseFloat(x.taxable_income)
+        summary.tax_ded += Number.parseFloat(x.tax_ded)
+        summary.net_pay += Number.parseFloat(x.net_pay)
+      })
+    return summary
+  })
 </script>
 
 <section class="section">
   <div class="overflow-x-auto">
-    <table class="table is-striped mx-auto">
+    <table class="table is-striped">
       <thead>
         <tr>
           <th>ID</th>
@@ -55,10 +55,10 @@
           <td class="text-right">{ p.tin_no            }</td>
           <td class="text-left"> { p.name              }</td>
           <td class="text-right">{ moneyFmt(p.earned_salary)  }</td>
-          <td class="text-center">{ p.living_percent*100 }</td>
+          <td class="text-center">{ Number.parseFloat(p.living_percent)*100 }</td>
           <td class="text-right">{ moneyFmt(p.living)  }</td>
           <td class="text-right">{ moneyFmt(p.vehicle) }</td>
-          <td class="text-center">{ p.non_cash_percent*100 }</td>
+          <td class="text-center">{ Number.parseFloat(p.non_cash_percent)*100 }</td>
           <td class="text-right">{ moneyFmt(p.non_cash)}</td>
           <td class="text-right">{ moneyFmt(p.total_additions)   }</td>
           <td class="text-right">{ moneyFmt(p.ssnit_amount)   }</td>

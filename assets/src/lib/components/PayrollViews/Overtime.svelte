@@ -1,21 +1,19 @@
 <script>
   import { moneyFmt } from '$lib/utils'
-  import { data } from '$store';
+  import { model } from '../../../model.svelte';
 
-  let summary = {}
-
-  $: payroll = $data.payroll
-
-  $: if (payroll) {
-    summary = {
-      overtime_earned: 0,
-      overtime_tax: 0
-    }
-    payroll.forEach(x => {
-      summary.overtime_earned += Number.parseFloat(x.overtime_earned)
-      summary.overtime_tax    += Number.parseFloat(x.overtime_tax)
-    })
-  }
+  let payroll = $derived(model.payroll)
+  let summary = $derived.by(() => {
+      let summary = {
+        overtime_earned: 0,
+        overtime_tax: 0
+      }
+      payroll.forEach(x => {
+        summary.overtime_earned += Number.parseFloat(x.overtime_earned)
+        summary.overtime_tax    += Number.parseFloat(x.overtime_tax)
+      })
+    return summary
+  })
 </script>
 
 <table class="table mx-auto is-striped">
@@ -29,7 +27,7 @@
   </thead>
   <tbody>
     {#each payroll as p}
-    {#if p.overtime_earned > 0}
+    {#if Number.parseFloat(p.overtime_earned) > 0}
       <tr>
         <td>                   { p.id              }</td>
         <td>                   { p.name            }</td>

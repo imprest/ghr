@@ -1,15 +1,30 @@
-button {
-  @apply appearance-none content-center items-center
-    inline-flex mb-1 py-1 px-4 font-semibold shadow-sm rounded-sm
+.btn {
+  @apply appearance-none flex-center border border-gray-300
+    inline-flex py-1 h-full px-4 font-semibold shadow-sm rounded-sm
     cursor-pointer outline-none
     transition-colors duration-100
-    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring focus-visible:ring-offset-2
+    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
     disabled:opacity-50 disabled:pointer-events-none 
-    bg-primary text-primary-foreground;
-  /* ring-offset-background */
+    text-foreground;
+
+  &:is([aria-current], :focus-visible) {
+    @apply ring-primary-focus;
+  }
+
+  &:is([aria-current], :hover) {
+    @apply bg-gray-100;
+  }
+
+  &:is(:active) {
+    @apply bg-gray-200;
+  }
+}
+
+.btn-primary {
+  @apply bg-primary text-white border-primary;
 
   &:is([aria-current], :hover, :focus-visible) {
-    @apply bg-primary-hover ring-primary-focus text-primary-foreground;
+    @apply bg-primary-hover ring-primary-focus;
   }
 
   &:is(:active) {
@@ -17,27 +32,27 @@ button {
   }
 }
 
-button.secondary {
-  @apply bg-secondary text-secondary-foreground;
+.btn-danger {
+  @apply bg-danger text-white border-danger;
 
   &:is([aria-current], :hover, :focus-visible) {
-    @apply bg-secondary-hover ring-secondary-focus;
+    @apply bg-danger-hover ring-danger-focus;
   }
 
   &:is(:active) {
-    @apply bg-secondary-active;
+    @apply bg-danger-active;
   }
 }
 
-button.error {
-  @apply bg-error text-error-foreground;
-}
-button.warning {
-  @apply bg-warning text-warning-foreground;
-}
-button.info {
-  @apply bg-info text-info-foreground;
-}
-button.success {
-  @apply bg-success text-success-foreground;
-}
+/* .btn-error { */
+/*   @apply bg-error text-error-foreground; */
+/* } */
+/* .btn-warning { */
+/*   @apply bg-warning text-warning-foreground; */
+/* } */
+/* .btn-info { */
+/*   @apply bg-info text-info-foreground; */
+/* } */
+/* .btn-success { */
+/*   @apply bg-success text-success-foreground; */
+/* } */

@@ -1,5 +1,5 @@
 <script>
-  import { data } from "$store";
+  import { model } from "../../../model.svelte";
 </script>
 
 <table class="table mx-auto is-striped">
@@ -11,8 +11,8 @@
     </tr>
   </thead>
   <tbody>
-    {#each $data.payroll as p}
-    {#if p.days_worked != 27}
+    {#each model.payroll as p}
+    {#if Number.parseFloat(p.days_worked) !== 27}
     <tr>
       <td>{p.id  }</td>
       <td>{p.name}</td>

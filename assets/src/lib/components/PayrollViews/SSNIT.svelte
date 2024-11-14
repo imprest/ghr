@@ -1,48 +1,44 @@
 <script>
   import { moneyFmt } from '$lib/utils';
-  import { data } from '$store';
+  import { model } from '../../../model.svelte';
 
-  let summary = {}
+  let payroll = $derived(model.payroll)
+  let management = $derived(model.management)
 
-  $: payroll = $data.payroll
-  $: management = $data.management
-
-  $: if (payroll || management) {
-    summary = {
-      earned_salary: 0,
-      ssnit_emp_contrib: 0,
-      ssnit_amount: 0,
-      ssnit_total: 0,
-      ssnit_tier_1: 0,
-      ssnit_tier_2: 0
-    }
-    payroll.forEach(x => {
-      if (x.ssnit_amount == '0.00') return
-      summary.earned_salary += Number.parseFloat(x.earned_salary)
-      summary.ssnit_emp_contrib += Number.parseFloat(x.ssnit_emp_contrib)
-      summary.ssnit_amount += Number.parseFloat(x.ssnit_amount)
-      summary.ssnit_total  += Number.parseFloat(x.ssnit_total)
-      summary.ssnit_tier_1 += Number.parseFloat(x.ssnit_tier_1)
-      summary.ssnit_tier_2 += Number.parseFloat(x.ssnit_tier_2)
-    })
-    management.forEach(x => {
-      if (x.ssnit_amount == '0.00') return
-      summary.earned_salary += Number.parseFloat(x.earned_salary)
-      summary.ssnit_emp_contrib += Number.parseFloat(x.ssnit_emp_contrib)
-      summary.ssnit_amount += Number.parseFloat(x.ssnit_amount)
-      summary.ssnit_total  += Number.parseFloat(x.ssnit_total)
-      summary.ssnit_tier_1 += Number.parseFloat(x.ssnit_tier_1)
-      summary.ssnit_tier_2 += Number.parseFloat(x.ssnit_tier_2)
-    })
-
-
-  }
-
+  let summary = $derived.by(() => {
+      let summary = {
+        earned_salary: 0,
+        ssnit_emp_contrib: 0,
+        ssnit_amount: 0,
+        ssnit_total: 0,
+        ssnit_tier_1: 0,
+        ssnit_tier_2: 0
+      }
+      payroll.forEach(x => {
+        if (x.ssnit_amount == '0.00') return
+        summary.earned_salary += Number.parseFloat(x.earned_salary)
+        summary.ssnit_emp_contrib += Number.parseFloat(x.ssnit_emp_contrib)
+        summary.ssnit_amount += Number.parseFloat(x.ssnit_amount)
+        summary.ssnit_total  += Number.parseFloat(x.ssnit_total)
+        summary.ssnit_tier_1 += Number.parseFloat(x.ssnit_tier_1)
+        summary.ssnit_tier_2 += Number.parseFloat(x.ssnit_tier_2)
+      })
+      management.forEach(x => {
+        if (x.ssnit_amount == '0.00') return
+        summary.earned_salary += Number.parseFloat(x.earned_salary)
+        summary.ssnit_emp_contrib += Number.parseFloat(x.ssnit_emp_contrib)
+        summary.ssnit_amount += Number.parseFloat(x.ssnit_amount)
+        summary.ssnit_total  += Number.parseFloat(x.ssnit_total)
+        summary.ssnit_tier_1 += Number.parseFloat(x.ssnit_tier_1)
+        summary.ssnit_tier_2 += Number.parseFloat(x.ssnit_tier_2)
+      })
+    return summary;
+  })
 </script>
 
-<section class="section">
+<section class="section-full">
   <div class="overflow-x-auto">
-    <table class="table is-striped mx-auto">
+    <table class="table is-striped mx-auto is-hoverable">
       <thead>
         <tr>
           <th>ID</th>
@@ -60,7 +56,7 @@
       </thead>
       <tbody>
         {#each payroll as p}
-        {#if p.ssnit_amount > 0}
+        {#if Number.parseFloat(p.ssnit_amount) > 0}
           <tr>
             <td>                    { p.id                }</td>
             <td>                    { p.name              }</td>
@@ -77,7 +73,7 @@
         {/if}
         {/each}
         {#each management as m}
-        {#if m.ssnit_amount > 0}
+        {#if Number.parseFloat(m.ssnit_amount) > 0}
           <tr>
             <td>                    { m.id                }</td>
             <td>                    { m.name              }</td>

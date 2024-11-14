@@ -1,32 +1,36 @@
-<script>
+<script lang="ts">
   import { moneyFmt } from "$lib/utils";
-  import { data } from "$store";
+  import { model } from "../../../model.svelte";
 
-  let summary = {};
-  const keys = [
-    "days_worked", "base_salary", "earned_salary", "ssnit_amount", "pf_amount", "cash_allowance",
-    "total_cash", "total_relief", "taxable_income", "tax_ded", "overtime_earned", "overtime_tax",
-    "total_tax", "tuc_amount", "advance", "loan", "staff_welfare_ded", "pvt_loan",
-    "total_ded", "total_pay"
-  ]
-
-  $: if ($data.payroll) {
-    // New payroll data do initialise summary object to zeros
-    keys.forEach((k) => summary[k] = 0)
+  let summary = $derived.by(() => {
+    let s : any = {
+      days_worked: 0, base_salary: 0, earned_salary: 0, ssnit_amount: 0, pf_amount: 0, cash_allowance: 0,
+      total_cash: 0, total_relief: 0, taxable_income: 0, tax_ded: 0, overtime_earned: 0, overtime_tax: 0,
+      total_tax: 0, tuc_amount: 0, advance: 0, loan: 0, staff_welfare_ded: 0, pvt_loan: 0,
+      total_ded: 0, total_pay: 0
+    }
     // For each payroll item, aggregate the data into summary object
-    $data.payroll.forEach((x) => {
-      keys.forEach((k) => {
-        summary[k] += Number.parseFloat(x[k])
+    model.payroll.forEach((x: any) => {
+      Object.keys(s).forEach((k) => {
+        s[k] += Number.parseFloat(x[k])
       })
     });
-  }
+    return s;
+  })
+
+  let offsetWidth = $state(0);
+
+  $effect(() =>{
+    const width = document.getElementsByTagName('td')[0];
+    offsetWidth = width.offsetWidth
+  })
 </script>
 
-<table class="table is-striped is-bordered">
+<table class="table is-striped is-bordered is-hoverable is-sticky">
   <thead>
     <tr>
       <th class="text-center"><div>ID</div></th>
-      <th><div>Name</div></th>
+      <th style="inset-inline-start: {offsetWidth}px" ><div>Name</div></th>
       <th class="text-center"><div>Days</div></th>
       <th class="text-center"><div>Basic Salary</div></th>
       <th class="text-center"><div>Earned Salary</div></th>
@@ -51,18 +55,10 @@
     </tr>
   </thead>
   <tbody>
-    {#each $data.payroll as p, i}
-      <tr class={p.net_pay != p.total_pay ? "text-red-700 font-semibold" : ""}>
-        <td class="text-center">
-          <div class={i%2===0 ? "bg-white" : "yellow"}>
-            {p.id}
-          </div>
-        </td>
-        <td>
-          <div class={i%2===0 ? "bg-white" : "yellow"}>
-            {p.name}
-          </div>
-        </td>
+    {#each model.payroll as p, i}
+      <tr class="group/item {p.net_pay != p.total_pay ? 'text-danger font-semibold' : ''}">
+        <td class="text-center group-hover/item:bg-highlight {i%2 == 0 ? 'bg-white' : 'bg-even-row'}">{p.id}</td>
+        <td style="inset-inline-start: {offsetWidth}px" class="group-hover/item:bg-highlight {i%2 == 0 ? 'bg-white' : 'bg-even-row'}">{p.name}</td>
         <td class="text-center">{moneyFmt(p.days_worked)}</td>
         <td class="text-right"> {moneyFmt(p.base_salary)}</td>
         <td class="text-right"> {moneyFmt(p.earned_salary)}</td>
@@ -89,7 +85,7 @@
   </tbody>
   <tfoot>
     <tr>
-      <th />
+      <th></th>
       <th class="text-right">Total:</th>
       <th class="text-center">{moneyFmt(summary.days_worked)}</th>
       <th class="text-right"> {moneyFmt(summary.base_salary)}</th>
@@ -111,41 +107,7 @@
       <th class="text-right"> {moneyFmt(summary.pvt_loan)}</th>
       <th class="text-right"> {moneyFmt(summary.total_ded)}</th>
       <th class="text-right"> {moneyFmt(summary.total_pay)}</th>
-      <th />
+      <th></th>
     </tr>
   </tfoot>
 </table>
-
-<style lang="postcss">
-  thead tr th,
-  tfoot tr th {
-    @apply sticky z-20;
-  }
-
-  thead tr th {
-    @apply top-0 h-px bg-white border-b-0;
-  }
-  thead th:first-child { @apply sticky left-0 z-30; }
-  thead th:nth-child(2) { @apply sticky left-14 z-30; }
-  thead th > div { @apply bg-white inline-block h-full w-full px-2 py-1; }
-
-  tfoot tr th {
-    @apply bottom-0 bg-white;
-  }
-
-  tbody tr td:first-child {
-    @apply p-0 sticky left-0 z-10 h-full;
-  }
-
-  tbody tr td:nth-child(2) {
-    @apply p-0 sticky left-[60px] z-10 h-full;
-  }
-
-  tbody tr td > div {
-    @apply px-2 py-1 block h-full z-40;
-  }
-
-  tbody tr:hover td > div { background-color: var(--table-hover); }
-
-  .yellow { background-color: lightgoldenrodyellow; }
-</style>

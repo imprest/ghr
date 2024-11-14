@@ -1,21 +1,27 @@
-
-<script>
+<script lang="ts">
   import { moneyFmt } from '$lib/utils'
-  import { data } from '$store'
+  import { model } from "../../../model.svelte";
 
-  export let key = 'advance'
-  let total = 0
-
-  $: header = key.charAt(0).toUpperCase() + key.slice(1)
-  $: payroll = $data.payroll
-
-  $: if (payroll) {
-    total = 0
-    payroll.forEach(x => {
-      if (x[key] == '0.00') return
-      total += Number.parseFloat(x[key])
-    })
+  interface Props {
+    key: string;
   }
+
+  let { key = 'advance' }: Props = $props();
+
+  let header = $derived(key.charAt(0).toUpperCase() + key.slice(1))
+  let payroll = $derived(model.payroll)
+
+  let total = $derived.by(() => {
+    if (payroll) {
+      let t = 0
+      payroll.forEach((x:any) => {
+        if (x[key] == '0.00') return
+        t += Number.parseFloat(x[key])
+      })
+      return t
+    } else
+    return 0
+  })
 </script>
 
 <table class="table mx-auto is-striped">
@@ -27,8 +33,8 @@
     </tr>
   </thead>
   <tbody>
-    {#each payroll as p}
-    {#if p[key] > 0}
+    {#each payroll as p : any}
+    {#if Number.parseFloat(p[key]) > 0}
     <tr>
       <td>{p.id  }</td>
       <td>{p.name}</td>

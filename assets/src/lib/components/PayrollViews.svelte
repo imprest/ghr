@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { onMount } from "svelte";
   import Default from "./PayrollViews/Default.svelte";
   import Attendance from "./PayrollViews/Attendance.svelte";
   import Filter from "./PayrollViews/Filter.svelte";
@@ -10,18 +9,16 @@
   import SSNIT from "./PayrollViews/SSNIT.svelte";
   import GRA from "./PayrollViews/GRA.svelte";
 
-  export let view = "Default";
+  interface Props {
+    view?: string;
+  }
 
-  let h = 0;
-  let headerHeight = 0;
-  let sectionHeight = 0;
+  let { view = "Default" }: Props = $props();
 
-  onMount(() => {
-    headerHeight = document.getElementsByClassName("header")[0].clientHeight;
-    sectionHeight = document.getElementsByClassName("section")[0].clientHeight;
-  });
-
-  $: tableHeight = `${h - headerHeight - sectionHeight - 40}px`;
+  let h = $state(0);
+  let headerHeight = $derived(document.getElementsByClassName("header")[0].clientHeight);
+  let sectionHeight = $derived(document.getElementsByClassName("section")[0].clientHeight);
+  let tableHeight = $derived(`${h - headerHeight - sectionHeight - 40}px`);
 </script>
 
 <svelte:window bind:innerHeight={h} />
@@ -33,17 +30,17 @@
     {#if view === "Attendance"}
       <Attendance />
     {:else if view === "Advance"}
-      <Filter key={"advance"} />
+      <Filter key="advance" />
     {:else if view === "Bank"}
       <Bank />
     {:else if view === "Loan"}
-      <Filter key={"loan"} />
+      <Filter key="loan" />
     {:else if view === "GRA"}
       <GRA />
     {:else if view === "Management"}
       <Management />
     {:else if view === "Pvt Loan"}
-      <Filter key={"pvt_loan"} />
+      <Filter key="pvt_loan" />
     {:else if view === "Overtime"}
       <Overtime />
     {:else if view === "PF"}

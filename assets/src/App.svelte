@@ -1,12 +1,10 @@
 <script lang="ts">
-  import { MONTHS, CUR_YEARS, CUR_YEAR, CUR_MONTH } from "$lib/utils";
-  import { onMount } from "svelte";
+  import { onMount, setContext } from "svelte";
   import PayrollViews from "$lib/components/PayrollViews.svelte";
-  import { getPayroll, data } from "./store";
+  import { model } from "./model.svelte"
+  import { channel } from "./store";
 
-  let year = CUR_YEAR;
-  let month = CUR_MONTH;
-  let view = "Default";
+  let view = $state("Default");
   let views = [
     "Default",
     "Attendance",
@@ -21,17 +19,70 @@
     "Overtime",
   ];
 
+  type ApiGetMonthlyPayroll = {type: "ApiGetMonthlyPayroll", data: {year: number,
+    month: number}}
+  type ApiGotMonthlyPayroll = {
+    type: "ApiGotMonthlyPayroll",
+    data: {error: string | undefined; result: { payroll: any, management: any}}
+  }
+
+  type Msg = ApiGetMonthlyPayroll | ApiGotMonthlyPayroll;
+
+  // UPDATE LOOP i.e. Take MSG -> Update Model and/or generate side_effect
+  setContext('update', {update} )
+  function update(msg: Msg): void {
+    if (msg.type === "ApiGetMonthlyPayroll") {
+      model.status = "loading"
+      const data = msg.data
+      apiGetMonthlyPayroll(data.year, data.month)
+    } else if (msg.type === "ApiGotMonthlyPayroll") {
+      const data = msg.data
+      if (data.error) { 
+        model.status = "error"
+        model.error_msg = data.error
+        return
+      } else {
+        const result = data.result
+        model.status = "loaded"
+        model.payroll = result.payroll
+        model.management = result.management
+        return;
+      }
+    }
+  }
+
+  // INIT
   onMount(() => {
-    getPayroll(CUR_YEAR, 5); // CUR_MONTH ); // TODO reset
+    update(
+      {
+        type: "ApiGetMonthlyPayroll",
+        data: {year: model.year, month: model.month}
+      }
+    )
   });
 
-  const yearChanged = () => getMonthlyPayroll(year, month);
-  const monthChanged = () => getMonthlyPayroll(year, month);
-  const getMonthlyPayroll = (year: number, month: number) =>
-    getPayroll(year, month);
+
+  // UI ACTION -> MSG
+  const yearChanged = () => update({type: "ApiGetMonthlyPayroll", data: {year: model.year, month: model.month}});
+  const monthChanged = () => update({type: "ApiGetMonthlyPayroll", data: {year: model.year, month: model.month}});
+
+function apiGetMonthlyPayroll(year: number, month: number) {
+  const y = year.toString().substring(2, 4);
+  const m = month.toString().length > 1 ? month : "0" + month;
+  channel
+    .push("payroll:get_month", { month: `${y}${m}M` })
+    .receive("ok", (msg) => {
+      update({type: "ApiGotMonthlyPayroll", data: {result: msg, error: undefined}})
+    })
+      .receive("error", (msg) => 
+      update({type: "ApiGotMonthlyPayroll", data: {result: {payroll: [], management:
+        []}, error: msg}}))
+    .receive("timeout", () => 
+      update({type: "ApiGotMonthlyPayroll", data: {result: {payroll: [], management:
+        []}, error: "timedout"}}))
+}
 </script>
 
-<!-- <header class="border-gray-300 border-b h-10"> -->
 <header class="header">
   <nav class="nav">
     <ul>
@@ -41,10 +92,22 @@
   </nav>
 </header>
 <main class="pt-4">
-  <section class="section">
+  <!-- <section class="section"> -->
+  <!--   <form class="flex gap-2 flex-wrap items-end justify-center"> -->
+  <!--     <label for="name" class="flex flex-col grow md:grow-0 basis-32"> -->
+  <!--       Name: -->
+  <!--       <input id="name" type="text" class="" placeholder="Maria"> -->
+  <!--     </label> -->
+  <!--     <label for="email" class="flex flex-col grow-[3] md:grow-0 basis-44"> -->
+  <!--       Email: -->
+  <!--       <input id="email" type="email" class="" placeholder="Maria2591@aol.com"> -->
+  <!--     </label> -->
+  <!--     <button class="btn grow basis-20 md:grow-0">Submit</button> -->
+  <!--   </form> -->
+  <!-- </section> -->
+  <section class="section mx-auto">
     <div class="flex flex-col sm:flex-row gap-2 items-baseline">
-      <button>Test</button>
-      <div class="select-combo flex-grow">
+      <div class="select-combo grow">
         <label for="view"> View </label>
         <select id="view" bind:value={view}>
           {#each views as v}
@@ -52,21 +115,24 @@
           {/each}
         </select>
       </div>
+      <button class="btn">{model.status}</button>
+      <button class="btn btn-primary">{model.status}</button>
+      <button class="btn btn-danger">{model.status}</button>
       <div class="select-combo">
         <label for="month">Month</label>
         <select
           id="month"
-          bind:value={month}
-          on:change={monthChanged}
+          bind:value={model.month}
+          onchange={monthChanged}
           class="mr-2"
         >
-          {#each MONTHS as m}
+          {#each model.months as m}
             <option>{m}</option>
           {/each}
         </select>
         <label class="pl-2" for="year">Year</label>
-        <select id="year" bind:value={year} on:change={yearChanged}>
-          {#each CUR_YEARS as y}
+        <select id="year" bind:value={model.year} onchange={yearChanged}>
+          {#each model.years as y}
             <option>{y}</option>
           {/each}
         </select>
@@ -74,9 +140,9 @@
     </div>
   </section>
 
-  {#if $data.payroll.length > 0}
+  {#if model.payroll.length > 0}
     <PayrollViews {view} />
   {:else}
-    <div>No Data for this month.</div>
+    <section class="section-full"><p>No Data for this month.</p></section>
   {/if}
 </main>

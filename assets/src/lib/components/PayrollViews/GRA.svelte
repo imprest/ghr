@@ -1,96 +1,102 @@
 <script>
   import { moneyFmt } from '$lib/utils'
-  import { data } from '$store';
+  import { model } from '../../../model.svelte';
 
-  let summary = {}
-  let msummary = {}
+  let payroll = $derived(model.payroll)
+  let management = $derived(model.management)
 
-  $: payroll = $data.payroll
-  $: management = $data.management
+  let summary = $derived.by(() => {
+      let summary = {
+        days_worked: 0,
+        base_salary: 0,
+        earned_salary: 0,
+        ssnit_amount: 0,
+        pf_amount: 0,
+        cash_allowance: 0,
+        total_cash: 0,
+        total_relief: 0,
+        taxable_income: 0,
+        tax_ded: 0,
+        overtime_earned: 0,
+        overtime_tax: 0,
+        total_tax: 0,
+        tuc_amount: 0,
+        advance: 0,
+        loan: 0,
+        staff_welfare_ded: 0,
+        pvt_loan: 0,
+        total_ded: 0,
+        total_pay: 0
+      };
+      payroll.forEach(x => {
+        summary.days_worked += Number.parseFloat(x.days_worked);
+        summary.base_salary += Number.parseFloat(x.base_salary);
+        summary.earned_salary += Number.parseFloat(x.earned_salary);
+        summary.ssnit_amount += Number.parseFloat(x.ssnit_amount);
+        summary.pf_amount += Number.parseFloat(x.pf_amount);
+        summary.cash_allowance += Number.parseFloat(x.cash_allowance);
+        summary.total_cash += Number.parseFloat(x.total_cash);
+        summary.total_relief += Number.parseFloat(x.total_relief);
+        summary.taxable_income += Number.parseFloat(x.taxable_income);
+        summary.tax_ded += Number.parseFloat(x.tax_ded);
+        summary.overtime_earned += Number.parseFloat(x.overtime_earned);
+        summary.overtime_tax += Number.parseFloat(x.overtime_tax);
+        summary.total_tax += Number.parseFloat(x.total_tax);
+      })
 
-  $: if (payroll) {
-    summary = {
-      days_worked: 0,
-      base_salary: 0,
-      earned_salary: 0,
-      ssnit_amount: 0,
-      pf_amount: 0,
-      cash_allowance: 0,
-      total_cash: 0,
-      total_relief: 0,
-      taxable_income: 0,
-      tax_ded: 0,
-      overtime_earned: 0,
-      overtime_tax: 0,
-      total_tax: 0,
-      tuc_amount: 0,
-      advance: 0,
-      loan: 0,
-      staff_welfare_ded: 0,
-      pvt_loan: 0,
-      total_ded: 0,
-      total_pay: 0
-    };
-    payroll.forEach(x => {
-      summary.days_worked += Number.parseFloat(x.days_worked);
-      summary.base_salary += Number.parseFloat(x.base_salary);
-      summary.earned_salary += Number.parseFloat(x.earned_salary);
-      summary.ssnit_amount += Number.parseFloat(x.ssnit_amount);
-      summary.pf_amount += Number.parseFloat(x.pf_amount);
-      summary.cash_allowance += Number.parseFloat(x.cash_allowance);
-      summary.total_cash += Number.parseFloat(x.total_cash);
-      summary.total_relief += Number.parseFloat(x.total_relief);
-      summary.taxable_income += Number.parseFloat(x.taxable_income);
-      summary.tax_ded += Number.parseFloat(x.tax_ded);
-      summary.overtime_earned += Number.parseFloat(x.overtime_earned);
-      summary.overtime_tax += Number.parseFloat(x.overtime_tax);
-      summary.total_tax += Number.parseFloat(x.total_tax);
-    })
-  }
+    return summary;
+  })
 
-  $: if (management) {
-    msummary = {
-      earned_salary: 0,
-      ssnit_amount: 0,
-      pf_amount: 0,
-      cash_allowance: 0,
-      total_cash: 0,
-      living: 0,
-      vehicle: 0,
-      non_cash: 0,
-      total_gra_income: 0,
-      total_relief: 0,
-      taxable_income: 0,
-      tax_ded: 0,
-      overtime_earned: 0,
-      overtime_tax: 0,
-      total_tax: 0,
-      tuc_amount: 0,
-      advance: 0,
-      loan: 0,
-      staff_welfare_ded: 0,
-      pvt_loan: 0,
-      total_ded: 0,
-      total_pay: 0
-    };
-    management.forEach(x => {
-      msummary.earned_salary += Number.parseFloat(x.earned_salary);
-      msummary.ssnit_amount += Number.parseFloat(x.ssnit_amount);
-      msummary.cash_allowance += Number.parseFloat(x.cash_allowance);
-      msummary.total_cash += Number.parseFloat(x.total_cash);
-      msummary.living += Number.parseFloat(x.living);
-      msummary.vehicle += Number.parseFloat(x.vehicle);
-      msummary.non_cash += Number.parseFloat(x.non_cash);
-      msummary.total_gra_income += Number.parseFloat(x.total_gra_income);
-      msummary.total_relief += Number.parseFloat(x.total_relief);
-      msummary.taxable_income += Number.parseFloat(x.taxable_income);
-      msummary.tax_ded += Number.parseFloat(x.tax_ded);
-      msummary.overtime_earned += Number.parseFloat(x.overtime_earned);
-      msummary.overtime_tax += Number.parseFloat(x.overtime_tax);
-      msummary.total_tax += Number.parseFloat(x.total_tax);
-    })
-  }
+  let msummary = $derived.by(() => {
+      let s = {
+        earned_salary: 0,
+        ssnit_amount: 0,
+        pf_amount: 0,
+        cash_allowance: 0.00,
+        total_cash: 0,
+        living: 0,
+        vehicle: 0,
+        non_cash: 0,
+        total_gra_income: 0,
+        total_relief: 0,
+        taxable_income: 0,
+        tax_ded: 0,
+        overtime_earned: 0,
+        overtime_tax: 0,
+        total_tax: 0,
+        tuc_amount: 0,
+        advance: 0,
+        loan: 0,
+        staff_welfare_ded: 0,
+        pvt_loan: 0,
+        total_ded: 0,
+        total_pay: 0
+      };
+      management.forEach(x => {
+        s.earned_salary += Number.parseFloat(x.earned_salary);
+        s.ssnit_amount += Number.parseFloat(x.ssnit_amount);
+        s.cash_allowance += Number.parseFloat(x.cash_allowance);
+        s.total_cash += Number.parseFloat(x.total_cash);
+        s.living += Number.parseFloat(x.living);
+        s.vehicle += Number.parseFloat(x.vehicle);
+        s.non_cash += Number.parseFloat(x.non_cash);
+        s.total_gra_income += Number.parseFloat(x.total_gra_income);
+        s.total_relief += Number.parseFloat(x.total_relief);
+        s.taxable_income += Number.parseFloat(x.taxable_income);
+        s.tax_ded += Number.parseFloat(x.tax_ded);
+        s.overtime_earned += Number.parseFloat(x.overtime_earned);
+        s.overtime_tax += Number.parseFloat(x.overtime_tax);
+        s.total_tax += Number.parseFloat(x.total_tax);
+      })
+    return s;
+  })
 
+  let offsetWidth = $state(0);
+
+  $effect(() => {
+    const width = document.getElementsByTagName('td')[0];
+    offsetWidth = width.offsetWidth
+  })
 </script>
 <div class="section sm:block md:flex lg:gap-4">
   <p>
@@ -103,11 +109,11 @@
     Total Income: {moneyFmt(summary.taxable_income+msummary.taxable_income)} | Tax: {moneyFmt(summary.total_tax+msummary.total_tax)}
   </p>
 </div>
-<table class="table is-striped is-bordered">
+<table class="table is-striped is-bordered is-hoverable is-sticky">
   <thead>
     <tr>
       <th><div class="text-center">1<br>No.</div></th>
-      <th><div>2<br>TIN / Ghana Card</div></th>
+      <th style="inset-inline-start: {offsetWidth}px"><div>2<br>TIN / Ghana Card</div></th>
       <th class="text-center"><div>3<br>Name</div></th>
       <th class="text-center"><div>4<br>Position</div></th>
       <th class="text-center"><div>5<br>Residency etc.</div></th>
@@ -138,15 +144,15 @@
   </thead>
   <tbody>
     {#each payroll as p, i }
-      <tr>
-        <td><div class="{ i % 2 == 0 ? 'bg-white text-right' : 'yellow text-right'}">{ i+1 }</div></td>
-        <td><div class="{ i % 2 == 0 ? 'bg-white' : 'yellow'}">{ p.tin_no }</div></td>
+      <tr class="group/item">
+        <td class="text-right group-hover/item:bg-highlight {i%2 == 0 ? 'bg-white' : 'bg-even-row'}">{i+1}</td>
+        <td style="inset-inline-start: {offsetWidth}px" class=" group-hover/item:bg-highlight {i%2 == 0 ? 'bg-white' : 'bg-even-row'}">{p.tin_no}</td>
         <td>{ p.name }</td>
         <td class="text-center">{ p.gra_category        }</td>
         <td class="text-center">N</td>
         <td class="text-right"> { moneyFmt(p.earned_salary     ) }</td>
         <td class="text-center">N</td>
-        <td class="text-center">{#if p.ssnit_amount > 0}Y{:else}N{/if}</td>
+        <td class="text-center">{#if Number.parseFloat(p.ssnit_amount) > 0}Y{:else}N{/if}</td>
         <td class="text-right"> { moneyFmt(p.ssnit_amount      ) }</td>
         <td class="text-right"> { moneyFmt(p.pf_amount         ) }</td>
         <td class="text-right"> { moneyFmt(p.cash_allowance    ) }</td>
@@ -170,15 +176,15 @@
       </tr>
     {/each}
     {#each management as p, i }
-      <tr>
-        <td><div class="{ i % 2 == 0 ? 'bg-white text-right' : 'yellow text-right'}">{ payroll.length+i+1 }</div></td>
-        <td><div class="{ i % 2 == 0 ? 'bg-white' : 'yellow'}">{ p.tin_no }</div></td>
+      <tr class="group/item">
+        <td class="text-right group-hover/item:bg-highlight {i%2 == 0 ? 'bg-white' : 'bg-even-row'}">{payroll.length+i+1}</td>
+<td style="inset-inline-start: {offsetWidth}px" class=' group-hover/item:bg-highlight {i%2 == 0 ? "bg-white" : "bg-even-row"}'>{p.tin_no}</td>
         <td>{ p.name }</td>
         <td class="text-center">{ p.gra_category        }</td>
         <td class="text-center">N</td>
         <td class="text-right"> { moneyFmt(p.earned_salary     ) }</td>
         <td class="text-center">N</td>
-        <td class="text-center">{#if p.ssnit_amount > 0}Y{:else}N{/if}</td>
+        <td class="text-center">{#if Number.parseFloat(p.ssnit_amount) > 0}Y{:else}N{/if}</td>
         <td class="text-right"> { moneyFmt(p.ssnit_amount      ) }</td>
         <td class="text-right"> { moneyFmt(p.pf_amount         ) }</td>
         <td class="text-right"> 0.00 </td>
@@ -235,38 +241,3 @@
     </tr>
   </tfoot>
 </table>
-
-<style lang="postcss">
-
-  thead tr th,
-  tfoot tr th {
-    @apply sticky z-20;
-  }
-
-  thead tr th {
-    @apply top-0 h-px bg-white border-b-0;
-  }
-  thead th:first-child { @apply sticky left-0 z-30; }
-  thead th:nth-child(2) { @apply sticky left-14 z-30; }
-  thead th > div { @apply bg-white inline-block h-full w-full px-2 py-1; }
-
-  tfoot tr th {
-    @apply bottom-0 bg-white;
-  }
-
-  tbody tr td:first-child {
-    @apply p-0 sticky left-0 z-10 h-full;
-  }
-
-  tbody tr td:nth-child(2) {
-    @apply p-0 sticky left-[60px] z-10 h-full;
-  }
-
-  tbody tr td > div {
-    @apply px-2 py-1 block h-full z-40;
-  }
-
-  tbody tr:hover td > div { background-color: var(--table-hover); }
-
-  .yellow { background-color: lightgoldenrodyellow; }
-</style>
