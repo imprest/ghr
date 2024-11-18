@@ -1,10 +1,10 @@
 /* Select Combo */
 .select-combo {
-  @apply flex;
-  > label {
-    @apply border border-gray-300 rounded-s-sm border-r-0 py-1 px-2 bg-gray-200;
-  }
-  > select {
-    @apply pr-4 ml-0 bg-white border rounded-e-sm border-gray-300;
-  }
+	@apply flex;
+	> label {
+		@apply border border-gray-300 rounded-s-sm border-r-0 py-1 px-2 bg-gray-200;
+	}
+	> select {
+		@apply pr-4 ml-0 bg-white border rounded-e-sm border-gray-300;
+	}
 }

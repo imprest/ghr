@@ -1,12 +1,8 @@
 defmodule GhrWeb.GhrChannel do
   use GhrWeb, :channel
-  use ChannelHandler.Router
 
   alias GhrWeb.Presence
-
-  # plug GhrWeb.ChannelPlugs.EnsureAuthenticated
-
-  event "payroll:get_month", GhrWeb.PayrollHandler, :get_month
+  alias Ghr.Data.ImportPayroll, as: Payroll
 
   @impl true
   def join("ghr:lobby", payload, socket) do
@@ -23,6 +19,16 @@ defmodule GhrWeb.GhrChannel do
   @impl true
   def handle_in("ping", payload, socket) do
     {:reply, {:ok, payload}, socket}
+  end
+
+  def handle_in("payroll:get_month", %{"month" => month}, socket) do
+    {:reply,
+      {:ok,
+        %{payroll: Payroll.import_month(month),
+          management: Payroll.get_management_payroll(month) }
+      },
+     socket
+    }
   end
 
   # It is also common to receive messages from the client and

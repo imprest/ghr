@@ -1,5 +1,5 @@
 .btn {
-  @apply appearance-none flex-center border border-gray-300
+	@apply appearance-none flex-center border border-gray-300
     inline-flex py-1 h-full px-4 font-semibold shadow-sm rounded-sm
     cursor-pointer outline-none
     transition-colors duration-100
@@ -7,41 +7,41 @@
     disabled:opacity-50 disabled:pointer-events-none 
     text-foreground;
 
-  &:is([aria-current], :focus-visible) {
-    @apply ring-primary-focus;
-  }
+	&:is([aria-current], :focus-visible) {
+		@apply ring-primary-focus;
+	}
 
-  &:is([aria-current], :hover) {
-    @apply bg-gray-100;
-  }
+	&:is([aria-current], :hover) {
+		@apply bg-gray-100;
+	}
 
-  &:is(:active) {
-    @apply bg-gray-200;
-  }
+	&:is(:active) {
+		@apply bg-gray-200;
+	}
 }
 
 .btn-primary {
-  @apply bg-primary text-white border-primary;
+	@apply bg-primary text-white border-primary;
 
-  &:is([aria-current], :hover, :focus-visible) {
-    @apply bg-primary-hover ring-primary-focus;
-  }
+	&:is([aria-current], :hover, :focus-visible) {
+		@apply bg-primary-hover ring-primary-focus;
+	}
 
-  &:is(:active) {
-    @apply bg-primary-active;
-  }
+	&:is(:active) {
+		@apply bg-primary-active;
+	}
 }
 
 .btn-danger {
-  @apply bg-danger text-white border-danger;
+	@apply bg-danger text-white border-danger;
 
-  &:is([aria-current], :hover, :focus-visible) {
-    @apply bg-danger-hover ring-danger-focus;
-  }
+	&:is([aria-current], :hover, :focus-visible) {
+		@apply bg-danger-hover ring-danger-focus;
+	}
 
-  &:is(:active) {
-    @apply bg-danger-active;
-  }
+	&:is(:active) {
+		@apply bg-danger-active;
+	}
 }
 
 /* .btn-error { */

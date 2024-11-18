@@ -45,8 +45,7 @@ defmodule Ghr.MixProject do
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
       {:jason, "~> 1.2"},
-      {:bandit, ">= 1.0.0-pre.3"},
-      {:channel_handler, "~> 0.6.1"},
+      {:bandit, "~> 1.0"},
       {:exsync, "~> 0.2.4", only: :dev}
     ]
   end

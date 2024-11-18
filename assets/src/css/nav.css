@@ -1,28 +1,28 @@
 .nav,
 .nav ul {
-  display: flex;
+	display: flex;
 }
 
 .nav {
-  @apply justify-between max-w-7xl mx-auto grow;
+	@apply justify-between max-w-7xl mx-auto grow;
 
-  ol,
-  ul {
-    @apply items-center mb-0 p-0 list-none;
+	ol,
+	ul {
+		@apply items-center mb-0 p-0 list-none;
 
-    &:first-of-type {
-      @apply ml-1;
-    }
+		&:first-of-type {
+			@apply ml-1;
+		}
 
-    &:last-of-type {
-      @apply mr-1;
-    }
-  }
+		&:last-of-type {
+			@apply mr-1;
+		}
+	}
 
-  li {
-    @apply inline m-0 p-2;
-    > * {
-      @apply space-x-0;
-    }
-  }
+	li {
+		@apply inline m-0 p-2;
+		> * {
+			@apply space-x-0;
+		}
+	}
 }

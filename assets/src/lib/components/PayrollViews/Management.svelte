@@ -1,92 +1,91 @@
-
 <script>
-  import { moneyFmt } from '$lib/utils'
-  import { model } from '../../../model.svelte'
+	import { moneyFmt } from '$lib/utils';
+	import { model } from '../../../model.svelte';
 
-  let management = $derived(model.management)
+	let management = $derived(model.management);
 
-  let summary = $derived.by(() => {
-      let summary = {
-        salary_total: 0,
-        total_additions: 0,
-        ssnit_amount:  0,
-        taxable_income: 0,
-        tax_ded: 0,
-        net_pay: 0
-      }
-    
-      management.forEach(x => {
-        summary.salary_total += Number.parseFloat(x.earned_salary)
-        summary.total_additions += Number.parseFloat(x.total_additions)
-        summary.ssnit_amount += Number.parseFloat(x.ssnit_amount)
-        summary.taxable_income += Number.parseFloat(x.taxable_income)
-        summary.tax_ded += Number.parseFloat(x.tax_ded)
-        summary.net_pay += Number.parseFloat(x.net_pay)
-      })
-    return summary
-  })
+	let summary = $derived.by(() => {
+		let summary = {
+			salary_total: 0,
+			total_additions: 0,
+			ssnit_amount: 0,
+			taxable_income: 0,
+			tax_ded: 0,
+			net_pay: 0
+		};
+
+		management.forEach((x) => {
+			summary.salary_total += Number.parseFloat(x.earned_salary);
+			summary.total_additions += Number.parseFloat(x.total_additions);
+			summary.ssnit_amount += Number.parseFloat(x.ssnit_amount);
+			summary.taxable_income += Number.parseFloat(x.taxable_income);
+			summary.tax_ded += Number.parseFloat(x.tax_ded);
+			summary.net_pay += Number.parseFloat(x.net_pay);
+		});
+		return summary;
+	});
 </script>
 
 <section class="section">
-  <div class="overflow-x-auto">
-    <table class="table is-striped">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>TIN</th>
-          <th class="text-left">Name</th>
-          <th>Salary</th>
-          <th>Accom. %</th>
-          <th>Accom.</th>
-          <th>Vehicle</th>
-          <th>Utilites %</th>
-          <th>Non-Cash</th>
-          <th>Additions</th>
-          <th>SSNIT</th>
-          <th>Taxable</th>
-          <th>Tax</th>
-          <th>Net Pay</th>
-        </tr>
-      </thead>
-      <tbody>
-        {#each management as p (p.id)}
-        <tr>
-          <td>                   { p.id                }</td>
-          <td class="text-right">{ p.tin_no            }</td>
-          <td class="text-left"> { p.name              }</td>
-          <td class="text-right">{ moneyFmt(p.earned_salary)  }</td>
-          <td class="text-center">{ Number.parseFloat(p.living_percent)*100 }</td>
-          <td class="text-right">{ moneyFmt(p.living)  }</td>
-          <td class="text-right">{ moneyFmt(p.vehicle) }</td>
-          <td class="text-center">{ Number.parseFloat(p.non_cash_percent)*100 }</td>
-          <td class="text-right">{ moneyFmt(p.non_cash)}</td>
-          <td class="text-right">{ moneyFmt(p.total_additions)   }</td>
-          <td class="text-right">{ moneyFmt(p.ssnit_amount)   }</td>
-          <td class="text-right">{ moneyFmt(p.taxable_income)   }</td>
-          <td class="text-right">{ moneyFmt(p.tax_ded)   }</td>
-          <td class="text-right">{ moneyFmt(p.net_pay)   }</td>
-        </tr>
-        {/each}
-      </tbody>
-      <tfoot>
-        <tr>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th class="text-right">{ moneyFmt(summary.salary_total) }</th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th class="text-right"></th>
-          <th></th>
-          <th class="text-right">{ moneyFmt(summary.total_additions) }</th>
-          <th class="text-right">{ moneyFmt(summary.ssnit_amount) }</th>
-          <th class="text-right">{ moneyFmt(summary.taxable_income) }</th>
-          <th class="text-right">{ moneyFmt(summary.tax_ded) }</th>
-          <th class="text-right">{ moneyFmt(summary.net_pay) }</th>
-          <th></th>
-        </tr>
-      </tfoot>
-    </table>
-  </div>
+	<div class="overflow-x-auto">
+		<table class="table is-striped">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>TIN</th>
+					<th class="text-left">Name</th>
+					<th>Salary</th>
+					<th>Accom. %</th>
+					<th>Accom.</th>
+					<th>Vehicle</th>
+					<th>Utilites %</th>
+					<th>Non-Cash</th>
+					<th>Additions</th>
+					<th>SSNIT</th>
+					<th>Taxable</th>
+					<th>Tax</th>
+					<th>Net Pay</th>
+				</tr>
+			</thead>
+			<tbody>
+				{#each management as p (p.id)}
+					<tr>
+						<td> {p.id}</td>
+						<td class="text-right">{p.tin_no}</td>
+						<td class="text-left"> {p.name}</td>
+						<td class="text-right">{moneyFmt(p.earned_salary)}</td>
+						<td class="text-center">{Number.parseFloat(p.living_percent) * 100}</td>
+						<td class="text-right">{moneyFmt(p.living)}</td>
+						<td class="text-right">{moneyFmt(p.vehicle)}</td>
+						<td class="text-center">{Number.parseFloat(p.non_cash_percent) * 100}</td>
+						<td class="text-right">{moneyFmt(p.non_cash)}</td>
+						<td class="text-right">{moneyFmt(p.total_additions)}</td>
+						<td class="text-right">{moneyFmt(p.ssnit_amount)}</td>
+						<td class="text-right">{moneyFmt(p.taxable_income)}</td>
+						<td class="text-right">{moneyFmt(p.tax_ded)}</td>
+						<td class="text-right">{moneyFmt(p.net_pay)}</td>
+					</tr>
+				{/each}
+			</tbody>
+			<tfoot>
+				<tr>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th class="text-right">{moneyFmt(summary.salary_total)}</th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th class="text-right"></th>
+					<th></th>
+					<th class="text-right">{moneyFmt(summary.total_additions)}</th>
+					<th class="text-right">{moneyFmt(summary.ssnit_amount)}</th>
+					<th class="text-right">{moneyFmt(summary.taxable_income)}</th>
+					<th class="text-right">{moneyFmt(summary.tax_ded)}</th>
+					<th class="text-right">{moneyFmt(summary.net_pay)}</th>
+					<th></th>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
 </section>
