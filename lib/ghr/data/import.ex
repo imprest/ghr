@@ -9,7 +9,7 @@ defmodule Ghr.Data.Import do
 
   @root_folder "/home/hvaria/Documents/backup"
   @employee_master Path.join(@root_folder, "HPMG22/H1EMP.DBF")
-  @calculated_payroll Path.join(@root_folder, "HPMG22/H1DETPAY.DBF")
+  # @calculated_payroll Path.join(@root_folder, "HPMG22/H1DETPAY.DBF")
   @zero D.new(0)
 
   def rsync_db_files() do

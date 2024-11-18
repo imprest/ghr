@@ -23,12 +23,9 @@ defmodule GhrWeb.GhrChannel do
 
   def handle_in("payroll:get_month", %{"month" => month}, socket) do
     {:reply,
-      {:ok,
-        %{payroll: Payroll.import_month(month),
-          management: Payroll.get_management_payroll(month) }
-      },
-     socket
-    }
+     {:ok,
+      %{payroll: Payroll.import_month(month), management: Payroll.get_management_payroll(month)}},
+     socket}
   end
 
   # It is also common to receive messages from the client and
@@ -42,7 +39,7 @@ defmodule GhrWeb.GhrChannel do
   @impl true
   def handle_info(:after_join, socket) do
     presence = Presence.get_by_key(socket, socket.assigns.name)
-    IO.inspect presence, label: "Presence Data:"
+    IO.inspect(presence, label: "Presence Data:")
 
     {:ok, _} =
       Presence.track(socket, socket.assigns.name, %{
