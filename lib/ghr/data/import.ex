@@ -4,7 +4,6 @@ defmodule Ghr.Data.Import do
   import Ghr.Data.Utils, only: [to_date: 1, to_time: 1, to_decimal: 1, nil?: 1]
 
   alias Ghr.Repo
-  alias Ghr.Data.Dbase
   alias Decimal, as: D
 
   @root_folder "/home/hvaria/Documents/backup"
@@ -25,7 +24,7 @@ defmodule Ghr.Data.Import do
 
   def emp_master() do
     emp_master =
-      Dbase.parse(
+      ExDbase.parse(
         @employee_master,
         [
           "EMP_NO",

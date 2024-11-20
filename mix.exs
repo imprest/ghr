@@ -46,6 +46,7 @@ defmodule Ghr.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:jason, "~> 1.2"},
       {:bandit, "~> 1.0"},
+      {:ex_dbase, "~> 1.0"},
       {:exsync, "~> 0.2.4", only: :dev}
     ]
   end

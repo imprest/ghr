@@ -2,7 +2,6 @@ defmodule Ghr.Data.ImportPayroll do
   @moduledoc "Import and check payroll data"
 
   import Ghr.Data.Utils, only: [to_date: 1, to_time: 1]
-  alias Ghr.Data.Dbase
 
   @root_folder "/home/hvaria/Documents/backup/HPMG22/"
   @expat_salary "/home/hvaria/Documents/backup/salary.csv"
@@ -116,7 +115,7 @@ defmodule Ghr.Data.ImportPayroll do
   end
 
   def parse_employee_master(dbf_file) do
-    Dbase.parse(
+    ExDbase.parse(
       dbf_file,
       [
         "EMP_NO",
@@ -168,7 +167,7 @@ defmodule Ghr.Data.ImportPayroll do
   defp parse_and_calculate_monthly_payroll(dbf_file, month, employees) do
     tax_year = determine_tax_year(month)
 
-    Dbase.parse(
+    ExDbase.parse(
       dbf_file,
       [
         "PD_MTH",
