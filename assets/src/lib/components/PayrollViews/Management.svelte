@@ -14,7 +14,7 @@
 			net_pay: 0
 		};
 
-		management.forEach((x) => {
+		management.data.forEach((x) => {
 			summary.salary_total += Number.parseFloat(x.earned_salary);
 			summary.total_additions += Number.parseFloat(x.total_additions);
 			summary.ssnit_amount += Number.parseFloat(x.ssnit_amount);
@@ -48,7 +48,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				{#each management as p (p.id)}
+				{#each management.data as p (p.id)}
 					<tr>
 						<td> {p.id}</td>
 						<td class="text-right">{p.tin_no}</td>

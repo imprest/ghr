@@ -14,7 +14,7 @@
 			ssnit_tier_1: 0,
 			ssnit_tier_2: 0
 		};
-		payroll.forEach((x) => {
+		payroll.data.forEach((x) => {
 			if (x.ssnit_amount == '0.00') return;
 			summary.earned_salary += Number.parseFloat(x.earned_salary);
 			summary.ssnit_emp_contrib += Number.parseFloat(x.ssnit_emp_contrib);
@@ -23,7 +23,7 @@
 			summary.ssnit_tier_1 += Number.parseFloat(x.ssnit_tier_1);
 			summary.ssnit_tier_2 += Number.parseFloat(x.ssnit_tier_2);
 		});
-		management.forEach((x) => {
+		management.data.forEach((x) => {
 			if (x.ssnit_amount == '0.00') return;
 			summary.earned_salary += Number.parseFloat(x.earned_salary);
 			summary.ssnit_emp_contrib += Number.parseFloat(x.ssnit_emp_contrib);
@@ -55,7 +55,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				{#each payroll as p}
+				{#each payroll.data as p}
 					{#if Number.parseFloat(p.ssnit_amount) > 0}
 						<tr>
 							<td> {p.id}</td>
@@ -72,7 +72,7 @@
 						</tr>
 					{/if}
 				{/each}
-				{#each management as m}
+				{#each management.data as m}
 					{#if Number.parseFloat(m.ssnit_amount) > 0}
 						<tr>
 							<td> {m.id}</td>

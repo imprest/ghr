@@ -14,7 +14,7 @@
 	let umb = $derived.by(() => {
 		let u: Bank[] = [];
 		let count = 0;
-		model.payroll.forEach((x) => {
+		model.payroll.data.forEach((x) => {
 			if (x.bank.startsWith('MBG')) {
 				u.push({
 					count: (count += 1),
@@ -32,7 +32,7 @@
 	let absa = $derived.by(() => {
 		let a: Bank[] = [];
 		let count = 0;
-		model.payroll.forEach((x) => {
+		model.payroll.data.forEach((x) => {
 			if (x.bank.startsWith('BBG')) {
 				a.push({
 					count: (count += 1),

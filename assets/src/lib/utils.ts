@@ -26,6 +26,7 @@ export function dateFmt(date: Date) {
 	return df.format(new Date(date)).replaceAll('/', '-');
 }
 
+// Will not work correctly if the number are formatted as string from server
 export function compareValues(key: any, order = 'asc') {
 	return function (a: any, b: any) {
 		const varA = typeof a[key] === 'string' ? a[key].toUpperCase() : a[key];

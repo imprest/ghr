@@ -14,7 +14,7 @@
 	let total = $derived.by(() => {
 		if (payroll) {
 			let t = 0;
-			payroll.forEach((x: any) => {
+			payroll.data.forEach((x: any) => {
 				if (x[key] == '0.00') return;
 				t += Number.parseFloat(x[key]);
 			});
@@ -32,7 +32,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		{#each payroll as p}
+		{#each payroll.data as p}
 			{#if Number.parseFloat(p[key]) > 0}
 				<tr>
 					<td>{p.id}</td>

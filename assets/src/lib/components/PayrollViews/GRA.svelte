@@ -28,7 +28,7 @@
 			total_ded: 0,
 			total_pay: 0
 		};
-		payroll.forEach((x) => {
+		payroll.data.forEach((x) => {
 			summary.days_worked += Number.parseFloat(x.days_worked);
 			summary.base_salary += Number.parseFloat(x.base_salary);
 			summary.earned_salary += Number.parseFloat(x.earned_salary);
@@ -72,7 +72,7 @@
 			total_ded: 0,
 			total_pay: 0
 		};
-		management.forEach((x) => {
+		management.data.forEach((x) => {
 			s.earned_salary += Number.parseFloat(x.earned_salary);
 			s.ssnit_amount += Number.parseFloat(x.ssnit_amount);
 			s.cash_allowance += Number.parseFloat(x.cash_allowance);
@@ -146,7 +146,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		{#each payroll as p, i}
+		{#each payroll.data as p, i}
 			<tr class="group/item">
 				<td
 					class="text-right group-hover/item:bg-highlight {i % 2 == 0 ? 'bg-white' : 'bg-even-row'}"
@@ -187,11 +187,11 @@
 				<td></td>
 			</tr>
 		{/each}
-		{#each management as p, i}
+		{#each management.data as p, i}
 			<tr class="group/item">
 				<td
 					class="text-right group-hover/item:bg-highlight {i % 2 == 0 ? 'bg-white' : 'bg-even-row'}"
-					>{payroll.length + i + 1}</td
+					>{payroll.data.length + i + 1}</td
 				>
 				<td
 					style="inset-inline-start: {offsetWidth}px"

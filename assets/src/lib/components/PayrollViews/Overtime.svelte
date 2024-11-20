@@ -8,7 +8,7 @@
 			overtime_earned: 0,
 			overtime_tax: 0
 		};
-		payroll.forEach((x) => {
+		payroll.data.forEach((x) => {
 			summary.overtime_earned += Number.parseFloat(x.overtime_earned);
 			summary.overtime_tax += Number.parseFloat(x.overtime_tax);
 		});
@@ -26,7 +26,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		{#each payroll as p}
+		{#each payroll.data as p}
 			{#if Number.parseFloat(p.overtime_earned) > 0}
 				<tr>
 					<td> {p.id}</td>

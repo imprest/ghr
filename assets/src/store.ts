@@ -1,5 +1,6 @@
 // import { writable } from "svelte/store";
 import { Socket, Presence } from 'phoenix';
+import { model } from './model.svelte';
 
 let socket = new Socket('/socket', { params: { token: window.userToken } });
 socket.connect();
@@ -8,11 +9,18 @@ export let channel = socket.channel('ghr:lobby', {});
 channel
 	.join()
 	.receive('ok', (resp: any) => {
+		model.connected = true;
 		console.log('Joined successfully', resp);
 	})
 	.receive('error', (resp: any) => {
+		model.connected = false;
 		console.log('Unable to join', resp);
 	});
+
+channel.onError((resp: any) => {
+	model.connected = false;
+	console.log('Channel error', resp);
+});
 
 export const presence = new Presence(channel);
 

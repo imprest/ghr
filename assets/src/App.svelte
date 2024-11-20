@@ -46,8 +46,8 @@
 			} else {
 				const result = data.result;
 				model.status = 'loaded';
-				model.payroll = result.payroll;
-				model.management = result.management;
+				model.payroll.data = result.payroll;
+				model.management.data = result.management;
 				return;
 			}
 		}
@@ -95,7 +95,13 @@
 		<ul>
 			<li><strong>GHR</strong></li>
 		</ul>
-		<ul><li><a href="/">Logout</a></li></ul>
+		<ul>
+			<li>
+				<a href="/"
+					>Logout{#if !model.connected}@{/if}</a
+				>
+			</li>
+		</ul>
 	</nav>
 </header>
 <main class="pt-4">
@@ -142,7 +148,7 @@
 		</div>
 	</section>
 
-	{#if model.payroll.length > 0}
+	{#if model.payroll.data.length > 0}
 		<PayrollViews {view} />
 	{:else}
 		<section class="section-full"><p>No Data for this month.</p></section>

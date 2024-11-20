@@ -18,7 +18,7 @@
 		let p: PF[] = [];
 		let t_pf_amount = 0;
 
-		payroll.forEach((x) => {
+		payroll.data.forEach((x) => {
 			if (x.pf_amount == '0.00') return;
 			t_pf_amount = Number.parseFloat(x.pf_amount);
 			let pf_emp_contrib = +(Math.round(0.25 * Number.parseFloat(x.pf_amount + 'e+2')) + 'e-2');

@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { moneyFmt } from '$lib/utils';
+	import { moneyFmt, compareValues } from '$lib/utils';
 	import { model } from '../../../model.svelte';
+	import SortIcon from '../sort-icon.svelte';
 
 	let summary = $derived.by(() => {
 		let s: any = {
@@ -26,7 +27,7 @@
 			total_pay: 0
 		};
 		// For each payroll item, aggregate the data into summary object
-		model.payroll.forEach((x: any) => {
+		model.payroll.data.forEach((x: any) => {
 			Object.keys(s).forEach((k) => {
 				s[k] += Number.parseFloat(x[k]);
 			});
@@ -34,20 +35,44 @@
 		return s;
 	});
 
+	let key = $derived(model.payroll.sortBy);
+	let sort = $derived(model.payroll.sortOrder);
+
+	let sortedPayroll = $derived.by(() => {
+		return model.payroll.data.toSorted(compareValues(key, sort));
+	});
+
+	function sortBy(key: string) {
+		model.payroll.sortBy = key;
+		model.payroll.sortOrder = sort === 'asc' ? 'desc' : 'asc';
+	}
+
 	let offsetWidth = $state(0);
 
 	$effect(() => {
 		const width = document.getElementsByTagName('td')[0];
-		offsetWidth = width.offsetWidth;
+		offsetWidth = width?.offsetWidth || 40;
 	});
 </script>
 
 <table class="table is-striped is-bordered is-hoverable is-sticky">
 	<thead>
 		<tr>
-			<th class="text-center"><div>ID</div></th>
-			<th style="inset-inline-start: {offsetWidth}px"><div>Name</div></th>
-			<th class="text-center"><div>Days</div></th>
+			<th class="text-center" onclick={() => sortBy('id')}
+				><div>
+					ID{#if key === 'id'}<SortIcon {sort} />{/if}
+				</div></th
+			>
+			<th style="inset-inline-start: {offsetWidth}px" onclick={() => sortBy('name')}
+				><div>
+					Name{#if key === 'name'}<SortIcon {sort} />{/if}
+				</div></th
+			>
+			<th class="text-center" onclick={() => sortBy('days_worked')}
+				><div>
+					Days{#if key === 'days_worked'}<SortIcon {sort} />{/if}
+				</div></th
+			>
 			<th class="text-center"><div>Basic Salary</div></th>
 			<th class="text-center"><div>Earned Salary</div></th>
 			<th class="text-center"><div>SSNIT</div></th>
@@ -71,10 +96,10 @@
 		</tr>
 	</thead>
 	<tbody>
-		{#each model.payroll as p, i}
+		{#each sortedPayroll as p, i}
 			<tr class="group/item {p.net_pay != p.total_pay ? 'text-danger font-semibold' : ''}">
 				<td
-					class="text-center group-hover/item:bg-highlight {i % 2 == 0
+					class="group-hover/item:bg-highlight text-center {i % 2 == 0
 						? 'bg-white'
 						: 'bg-even-row'}">{p.id}</td
 				>

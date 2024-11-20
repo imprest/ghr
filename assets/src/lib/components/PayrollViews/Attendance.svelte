@@ -11,7 +11,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		{#each model.payroll as p}
+		{#each model.payroll.data as p}
 			{#if Number.parseFloat(p.days_worked) !== 27}
 				<tr>
 					<td>{p.id}</td>
